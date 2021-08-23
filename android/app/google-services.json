@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "87463924792",
+    "firebase_url": "https://grader-for-mashov.firebaseio.com",
+    "project_id": "grader-for-mashov",
+    "storage_bucket": "grader-for-mashov.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87463924792:android:9ab1db776e0aa2485e82cd",
+        "android_client_info": {
+          "package_name": "com.dolev.graderForMashov"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87463924792-emmc2a8lc52ve7kttfd7cjacg5a7mt35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMObnd5RFdscywejzOZPbI55TwX6mkjao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87463924792-emmc2a8lc52ve7kttfd7cjacg5a7mt35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
