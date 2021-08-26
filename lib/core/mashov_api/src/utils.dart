@@ -1,4 +1,4 @@
-import 'models.dart';
+import 'models/models.dart';
 
 ///Some nice utility functions
 class Utils {

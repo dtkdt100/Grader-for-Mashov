@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/homework.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
 import 'package:wakelock/wakelock.dart';
 

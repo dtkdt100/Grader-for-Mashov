@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/grade.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
 
 class OneLineGrade extends StatelessWidget {

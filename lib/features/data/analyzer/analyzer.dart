@@ -1,4 +1,3 @@
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
 import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
 
 class Analyzer<E> {

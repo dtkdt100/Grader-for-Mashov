@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
 import 'package:grader_for_mashov_new/features/utilities/download_utilities.dart';
 import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
@@ -163,7 +162,7 @@ class _MsgScreenState extends State<MsgScreen> {
     var status = await Permission.storage.status;
 
     if (status.isDenied) {
-      Permission.storage.request();
+      await Permission.storage.request();
     }
 
     return status.isGranted;

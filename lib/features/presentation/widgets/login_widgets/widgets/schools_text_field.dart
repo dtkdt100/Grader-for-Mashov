@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/login/school.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/auto_complete_text_field/auto_complete_text_field.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/auto_complete_text_field/simple_auto_complete_text_field.dart';
 

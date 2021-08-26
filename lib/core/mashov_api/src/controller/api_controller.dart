@@ -1,19 +1,18 @@
-// ignore_for_file: constant_identifier_names
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/custom_dialog.dart';
 import 'package:grader_for_mashov_new/features/utilities/download_utilities.dart';
 import 'package:http/http.dart' as http;
-import 'cookie_manager.dart';
-import 'request_controller.dart';
-import '../models.dart';
+import 'cookie_manager/cookie_manager.dart';
+import 'request_controller/request_controller.dart';
+import '../models/models.dart';
 import '../utils.dart';
 
 typedef Parser<E> = E Function(Map<String, dynamic> src);
 typedef DataProcessor = void Function(dynamic data, Api api);
 typedef RawDataProcessor = void Function(String json, Api api);
 
-//final Dio _dio = Dio();
 
 class ApiController {
   final CookieManager _cookieManager;
@@ -49,7 +48,7 @@ class ApiController {
 
   ///returns a list of schools.
   Future<Result<List<School>>> getSchools() =>
-      _authList(_schoolsUrl, School.fromJson, Api.Schools);
+      _authList(_schoolsUrl, School.fromJson, Api.schools);
 
   ///Send one time password
   Future<bool> sendLoginCode(School school, String id, String cellphone) async {
@@ -74,9 +73,9 @@ class ApiController {
       "password": password,
       "year": year,
       "appName": "info.mashov.students",
-      "appVersion": _ApiVersion,
-      "apiVersion": _ApiVersion,
-      "appBuild": _ApiVersion,
+      "appVersion": _apiVersion,
+      "apiVersion": _apiVersion,
+      "appBuild": _apiVersion,
       "deviceUuid": "chrome",
       "devicePlatform": "chrome",
       "deviceManufacturer": "win",
@@ -118,20 +117,20 @@ class ApiController {
       headers["uniquId"] = uniqueId;
     }
     var hi = await _requestController.get(_gradesUrl(userId), headers);
-    var yo = _parseListResponse<Grade>(hi, Grade.fromJson, Api.Grades);
+    var yo = _parseListResponse<Grade>(hi, Grade.fromJson, Api.grades);
     return yo;
   }
 
   ///Returns a list of behave events.
   Future<Result<List<BehaveEvent>>>? getBehaveEvents(String userId) => _process(
       _authList<BehaveEvent>(
-          _behaveUrl(userId), BehaveEvent.fromJson, Api.BehaveEvents),
-      Api.BehaveEvents);
+          _behaveUrl(userId), BehaveEvent.fromJson, Api.behaveEvents),
+      Api.behaveEvents);
 
   ////Returns the messages count - all, inbox, new and unread.
   Future<Result<MessagesCount>> getMessagesCount() => _process(
-          _auth(_messagesCountUrl, MessagesCount.fromJson, Api.MessagesCount),
-          Api.MessagesCount)
+          _auth(_messagesCountUrl, MessagesCount.fromJson, Api.messagesCount),
+          Api.messagesCount)
       .then((r) => Result(
           exception: r.exception,
           statusCode: r.statusCode,
@@ -139,13 +138,13 @@ class ApiController {
 
   ///Returns a list of conversations.
   Future<Result<List<Conversation>>> getMessages(int skip) => _process(
-      _authList(_messagesUrl(skip), Conversation.fromJson, Api.Messages),
-      Api.Messages);
+      _authList(_messagesUrl(skip), Conversation.fromJson, Api.messages),
+      Api.messages);
 
   ///Returns a specific message.
   Future<Result<Message>> getMessage(String messageId) => _process(
-          _auth(_messageUrl(messageId), Message.fromJson, Api.Message),
-          Api.Message)
+          _auth(_messageUrl(messageId), Message.fromJson, Api.message),
+          Api.message)
       .then((r) => Result(
           exception: r.exception,
           statusCode: r.statusCode,
@@ -179,7 +178,7 @@ class ApiController {
           (m) => Utils.integer(m["lessonNumber"]) == num,
           orElse: () => null);
       if (matchingBell == null) {
-        print(
+        debugPrint(
             "we've got a serious error here: no bell matched for lesson number $num, bells length is ${bellsMap.length}");
       }
       maps.add(matchingBell == null
@@ -191,7 +190,7 @@ class ApiController {
     }
     List<Lesson> timetable = maps.map((m) => Lesson.fromJson(m)).toList();
 
-    if (_dataProcessor != null) _dataProcessor!(timetable, Api.Timetable);
+    if (_dataProcessor != null) _dataProcessor!(timetable, Api.timetable);
     return Result<List<List<Lesson>>>(
         exception: null, value: processTableTimeDate(timetable, bellsMap), statusCode: 200);
   }
@@ -246,10 +245,10 @@ class ApiController {
   ///The class group is a different address, so we use an id -1 to access it.
   Future<Result<List<Group>>> getGroups(String userId) async {
     Result<List<Group>> groups =
-        await _authList<Group>(_groupsUrl(userId), Group.fromJson, Api.Groups);
+        await _authList<Group>(_groupsUrl(userId), Group.fromJson, Api.groups);
     groups.value!.add(Group(id: -1, teachers: [], subject: "כיתת אם"));
     if (_dataProcessor != null) {
-      _dataProcessor!(groups.value, Api.Groups);
+      _dataProcessor!(groups.value, Api.groups);
     }
     return groups;
   }
@@ -257,17 +256,17 @@ class ApiController {
   ///returns an Alfon Group contacts.
   Future<Result<List<Contact>>> getContacts(String userId, String groupId) =>
       _process(
-          _authList(_alfonUrl(userId, groupId), Contact.fromJson, Api.Alfon),
-          Api.Alfon);
+          _authList(_alfonUrl(userId, groupId), Contact.fromJson, Api.alfon),
+          Api.alfon);
 
   ///Returns a list of Maakav reports.
   Future<Result<List<Maakav>>> getMaakav(String userId) => _process(
-      _authList(_maakavUrl(userId), Maakav.fromJson, Api.Maakav), Api.Maakav);
+      _authList(_maakavUrl(userId), Maakav.fromJson, Api.maakav), Api.maakav);
 
   ///Returns a list of homework.
   Future<Result<List<Homework>>> getHomework(String userId) => _process(
-      _authList(_homeworkUrl(userId), Homework.fromJson, Api.Homework),
-      Api.Homework);
+      _authList(_homeworkUrl(userId), Homework.fromJson, Api.homework),
+      Api.homework);
 
   ///Returns a list of bagrut exams, combining both dates, times, room and grades.
   ///This will NOT go through raw data processor as it takes the data
@@ -290,7 +289,7 @@ class ApiController {
         maps.add(matchingTime == null ? g : Utils.mergeMaps(g, matchingTime));
       }
       List<Bagrut> bagrut = maps.map((m) => Bagrut.fromJson(m)).toList();
-      if (_dataProcessor != null) _dataProcessor!(bagrut, Api.Bagrut);
+      if (_dataProcessor != null) _dataProcessor!(bagrut, Api.bagrut);
       return Result<List<Bagrut>>(
           exception: null, value: bagrut, statusCode: 200);
     } catch (e) {
@@ -300,29 +299,29 @@ class ApiController {
 
   //Returns the user's hatamot.
   Future<Result<List<Hatama>>> getHatamot(String userId) => _process(
-      _authList(_hatamotUrl(userId), Hatama.fromJson, Api.Hatamot),
-      Api.Hatamot);
+      _authList(_hatamotUrl(userId), Hatama.fromJson, Api.hatamot),
+      Api.hatamot);
 
   ///Returns the user's Hatamot bagrut.
   Future<Result<List<HatamatBagrut>>> getHatamotBagrut(String userId) =>
       _process(
           _authList(_hatamotBagrutUrl(userId), HatamatBagrut.fromJson,
-              Api.HatamotBagrut),
-          Api.HatamotBagrut);
+              Api.hatamotBagrut),
+          Api.hatamotBagrut);
 
   ///Return the lesson count
   Future<List<BehaveCounter>> getEventsCounter(String userId) async {
     Result<List<BehaveEvent>> behaves2 = await _process(
         _authList<BehaveEvent>(
-            _behaveUrl(userId), BehaveEvent.fromJson, Api.BehaveEvents),
-        Api.BehaveEvents);
+            _behaveUrl(userId), BehaveEvent.fromJson, Api.behaveEvents),
+        Api.behaveEvents);
 
     Result<List<Group>> groups2 =
-        await _authList<Group>(_groupsUrl(userId), Group.fromJson, Api.Groups);
+        await _authList<Group>(_groupsUrl(userId), Group.fromJson, Api.groups);
 
 
     Result<List<LessonCount>?> lessonCounts = await _authList(
-        _lessonCountUrl(userId), LessonCount.fromJson, Api.LessonCount);
+        _lessonCountUrl(userId), LessonCount.fromJson, Api.lessonCount);
     List<BehaveEvent>? behaves = behaves2.value;
     List<Group>? groups = groups2.value;
     List<BehaveCounter> behaveCounter = [];
@@ -376,6 +375,7 @@ class ApiController {
   Future<File> getPicture(String userId, File file) {
     Map<String, String> headers = _authHeader();
     headers.addAll(_authHeader());
+
     return _requestController
         .get(_pictureUrl(userId), headers)
         .then((response) {
@@ -394,7 +394,6 @@ class ApiController {
     };
     headers.addAll(_authHeader());
     await _requestController.get(_logoutUrl, _authHeader());
-    _requestController.changeClient();
     _cookieManager.clearAll();
   }
 
@@ -571,7 +570,7 @@ class ApiController {
 
   static const String _logoutUrl = _baseUrl + "logout";
 
-  static const String _ApiVersion = "3.20210425";
+  static const String _apiVersion = "3.20210425";
 
   static Map<String, String> _setJsonHeader() {
     Map<String, String> jsonHeader = {};
@@ -590,7 +589,7 @@ class ApiController {
           }
         });
       } else {
-        print(
+        debugPrint(
             "Api controller data proccessor recieved data which is not of type Future<Result>");
         _dataProcessor!(data, api);
       }
@@ -600,21 +599,21 @@ class ApiController {
 }
 
 enum Api {
-  Schools,
-  Login,
-  Grades,
-  Bagrut,
-  BehaveEvents,
-  Groups,
-  Timetable,
-  Alfon,
-  Messages,
-  Message,
-  Details,
-  MessagesCount,
-  Maakav,
-  Homework,
-  Hatamot,
-  HatamotBagrut,
-  LessonCount
+  schools,
+  login,
+  grades,
+  bagrut,
+  behaveEvents,
+  groups,
+  timetable,
+  alfon,
+  messages,
+  message,
+  details,
+  messagesCount,
+  maakav,
+  homework,
+  hatamot,
+  hatamotBagrut,
+  lessonCount
 }

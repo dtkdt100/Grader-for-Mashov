@@ -69,9 +69,6 @@ class CookieManagerImpl implements CookieManager {
     if (headers.containsKey("set-cookie")) {
       var cookie = headers["set-cookie"];
 
-      ///uniquId is NOT a typo!
-      ///I...I really don't know why they named it that way.
-      ///just... go on
       uniqueId = cookie
           !.firstWhere((header) => header.contains("uniquId"))
           .split("=")

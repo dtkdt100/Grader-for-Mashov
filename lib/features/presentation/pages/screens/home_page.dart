@@ -60,95 +60,93 @@ class _HomePageState extends BaseScreen<HomePage> {
   }
 
   @override
+  Widget? get adWidget => adForLeaderBoard();
+
+  @override
   Widget get body {
     HomePageData homePageData = MashovUtilities.homePageData;
-    return Column(
-      children: [
-        SharedPreferencesUtilities.connectedToLeaderBoard
-            ? const SizedBox()
-            : adForLeaderBoard(),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-          child: Column(
-            children: [
-              CardDesign(
-                callback: () {
-                  NavigatorUtilities(const GradesScreen(1))
-                      .pushDefault(context);
-                },
-                title: 'ציונים אחרונים',
-                child: homePageData.grades == null
-                    ? null
-                    : homePageData.grades!.isEmpty
-                        ? noData()
-                        : Column(
-                            children: List.generate(homePageData.grades!.length,
-                                (index) {
-                              return OneLineGrade(
-                                grade: homePageData.grades![index],
-                                pad1: 0,
-                                pad2: 0,
-                                pad3: 3,
-                              );
-                            }),
-                          ),
-              ),
-              CardDesign(
-                callback: () {
-                  NavigatorUtilities(const HomeworkScreen(4))
-                      .pushDefault(context);
-                },
-                title: 'שיעורי בית',
-                child: homePageData.homeWorks == null
-                    ? null
-                    : homePageData.homeWorks!.isEmpty
-                        ? noData()
-                        : Column(
-                            children: List.generate(
-                                homePageData.homeWorks!.length, (index) {
-                              return OneLineHomework(
-                                homework: homePageData.homeWorks![index],
-                                index: index,
-                                pad: 1.0,
-                                font1: 15.0,
-                                cutLine: true,
-                              );
-                            }),
-                          ),
-              ),
-              CardDesign(
-                callback: () {
-                  NavigatorUtilities(const TableTimeScreen(2))
-                      .pushDefault(context);
-                },
-                title: 'מערכת שעות יומית',
-                removeBottom: true,
-                child: homePageData.tableTime == null
-                    ? null
-                    : homePageData.tableTime!.isEmpty
-                        ? noData()
-                        : Column(
-                            children: List.generate(
-                                homePageData.tableTime!.length, (index) {
-                              return OneLineLesson(
-                                lesson: homePageData.tableTime![index],
-                                glow: false,
-                                pad1: 2,
-                                pad2: 7,
-                                font1: 16,
-                                font2: 17,
-                              );
-                            }),
-                          ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+      child: Column(
+        children: [
+          CardDesign(
+            callback: () {
+              NavigatorUtilities(const GradesScreen(1))
+                  .pushDefault(context);
+            },
+            title: 'ציונים אחרונים',
+            child: homePageData.grades == null
+                ? null
+                : homePageData.grades!.isEmpty
+                    ? noData()
+                    : Column(
+                        children: List.generate(homePageData.grades!.length,
+                            (index) {
+                          return OneLineGrade(
+                            grade: homePageData.grades![index],
+                            pad1: 0,
+                            pad2: 0,
+                            pad3: 3,
+                          );
+                        }),
+                      ),
           ),
-        ),
-      ],
+          CardDesign(
+            callback: () {
+              NavigatorUtilities(const HomeworkScreen(4))
+                  .pushDefault(context);
+            },
+            title: 'שיעורי בית',
+            child: homePageData.homeWorks == null
+                ? null
+                : homePageData.homeWorks!.isEmpty
+                    ? noData()
+                    : Column(
+                        children: List.generate(
+                            homePageData.homeWorks!.length, (index) {
+                          return OneLineHomework(
+                            homework: homePageData.homeWorks![index],
+                            index: index,
+                            pad: 1.0,
+                            font1: 15.0,
+                            cutLine: true,
+                          );
+                        }),
+                      ),
+          ),
+          CardDesign(
+            callback: () {
+              NavigatorUtilities(const TableTimeScreen(2))
+                  .pushDefault(context);
+            },
+            title: 'מערכת שעות יומית',
+            removeBottom: true,
+            child: homePageData.tableTime == null
+                ? null
+                : homePageData.tableTime!.isEmpty
+                    ? noData()
+                    : Column(
+                        children: List.generate(
+                            homePageData.tableTime!.length, (index) {
+                          return OneLineLesson(
+                            lesson: homePageData.tableTime![index],
+                            glow: false,
+                            pad1: 2,
+                            pad2: 7,
+                            font1: 16,
+                            font2: 17,
+                          );
+                        }),
+                      ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget adForLeaderBoard() => Container(
+  Widget adForLeaderBoard() => SharedPreferencesUtilities.connectedToLeaderBoard
+      ? const SizedBox()
+      : Container(
         width: double.infinity,
         color: Colors.grey.withOpacity(0.8),
         child: Row(

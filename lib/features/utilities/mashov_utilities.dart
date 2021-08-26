@@ -9,6 +9,8 @@ import 'package:grader_for_mashov_new/core/mashov_api/mashov_api.dart';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
 import 'package:path_provider/path_provider.dart';
 
+export 'package:grader_for_mashov_new/core/mashov_api/mashov_api.dart';
+
 class MashovUtilities {
   static final ApiController _controller = MashovApi.getController()!;
 

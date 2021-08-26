@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/messages/conversation.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/messages/msg_screen.dart';
+import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
 
 class OneLineMsg extends StatelessWidget {
   final Conversation msg;
@@ -15,14 +16,21 @@ class OneLineMsg extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: msg.isNew ? Colors.white : Colors.grey[300],
+          color: msg.isNew
+              ? SharedPreferencesUtilities.themes.darkMode
+                  ? Colors.black54
+                  : Colors.white
+              : Colors
+                  .grey[SharedPreferencesUtilities.themes.darkMode ? 900 : 300],
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => MsgScreen(msg.conversationId)
-                )).then((value){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MsgScreen(msg.conversationId))).then((value) {
                   afterPush();
                 });
               },

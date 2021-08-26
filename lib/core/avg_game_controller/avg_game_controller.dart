@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:grader_for_mashov_new/core/mashov_api/src/controller/request_controller.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/controller/request_controller_impl.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/login/login.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/login/login_data.dart';
+
+import '../mashov_api/src/controller/request_controller/request_controller.dart';
+import '../mashov_api/src/controller/request_controller/request_controller_impl.dart';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
 
 class AvgGameController {

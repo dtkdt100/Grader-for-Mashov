@@ -1,19 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
 import 'package:grader_for_mashov_new/features/data/material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/grades/grade_chart_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/custom_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/calculate_avg_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/custom_fab_circular_menu.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/body_grades_design.dart';
-import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/card_design.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
 import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
 import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
 import '../../../../utilities/sort/grades/grades_sort_by_each_grade_sort_utilities.dart';
 import '../../../../utilities/sort/grades/grades_sort_utilities.dart';
 import '../../../../utilities/sort/grades/grades_sorted_by_subject_sort_utilities.dart';
-
 import '../../base_screen.dart';
 
 class GradesScreen extends StatefulWidget {

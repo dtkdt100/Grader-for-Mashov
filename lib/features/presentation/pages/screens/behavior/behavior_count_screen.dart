@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_behavior/one_line_behavior_sorted.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';

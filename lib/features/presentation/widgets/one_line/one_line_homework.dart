@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/homework.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/homework/homework_big_screen.dart';
 import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
 

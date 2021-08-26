@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as go;
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
+import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/grade.dart';
 import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
 

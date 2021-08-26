@@ -1,11 +1,8 @@
 import 'dart:math';
-
-import 'package:grader_for_mashov_new/core/mashov_api/src/models.dart';
 import 'package:grader_for_mashov_new/features/data/themes/light_themes.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/new_avg_dialog.dart';
 import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
-
 import '../custom_dialog.dart';
 
 class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {

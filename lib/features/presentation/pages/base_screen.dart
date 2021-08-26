@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/data/material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/three_dots_picker.dart';
 import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
@@ -12,6 +11,7 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
   PreferredSizeWidget? bottom;
   Widget? bottomNavigationBar;
   Widget? floatingActionButton;
+  Widget? adWidget;
   List<String> threeDotsLabels = ['רענן'];
 
 
@@ -57,9 +57,16 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
             ),
           ],
           physics: const BouncingScrollPhysics(),
-          body: body == null ? buildLoadingWidget() : SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: body,
+          body: body == null ? buildLoadingWidget() : Column(
+            children: [
+              adWidget ?? const SizedBox(),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: body,
+                ),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: bottomNavigationBar,
