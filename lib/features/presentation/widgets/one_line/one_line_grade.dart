@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/grade.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class OneLineGrade extends StatelessWidget {
   final Grade grade;
@@ -18,30 +18,30 @@ class OneLineGrade extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
+        Flexible(
+          child: Padding(
+            padding: EdgeInsets.only(right: pad3, top: pad3, bottom: pad3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(grade.event, style: const TextStyle(fontSize: 16),
+                  overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 2,),
+                Text(grade.subject, style: TextStyle(fontSize: 14, color: Colors.grey[500]),),
+              ],
+            ),
+          ),
+        ),
         Padding(
           padding: EdgeInsets.only(left: pad1, top: pad2,),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               _getGradeDesign(grade.grade),
               const SizedBox(height: 3,),
               Text('${grade.eventDate.day}.${grade.eventDate.month}.${grade.eventDate.year}',
                   style: TextStyle(fontSize: 14, color: Colors.grey[500])),
             ],
-          ),
-        ),
-        Flexible(
-          child: Padding(
-            padding: EdgeInsets.only(right: pad3, top: pad3, bottom: pad3),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(grade.event, style: const TextStyle(fontSize: 16),
-                  overflow: TextOverflow.ellipsis, textAlign: TextAlign.end,),
-                const SizedBox(height: 2,),
-                Text(grade.subject, style: TextStyle(fontSize: 14, color: Colors.grey[500]),),
-              ],
-            ),
           ),
         ),
       ],

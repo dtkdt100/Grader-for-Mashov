@@ -128,79 +128,82 @@ class FabCircularMenuState extends State<FabCircularMenu>
       _calculateProps();
     }
 
-    return Container(
-      margin: widget.fabMargin,
-      // Removes the default FAB margin
-      transform: Matrix4.translationValues(16.0, 16.0, 0.0),
-      child: Stack(
-        alignment: widget.alignment,
-        children: <Widget>[
-          // Ring
-          Transform(
-            transform: Matrix4.translationValues(
-              _translationX,
-              _translationY,
-              0.0,
-            )..scale(_scaleAnimation.value),
-            alignment: FractionalOffset.center,
-            child: OverflowBox(
-              maxWidth: _ringDiameter,
-              maxHeight: _ringDiameter,
-              child: SizedBox(
-                width: _ringDiameter,
-                height: _ringDiameter,
-                child: CustomPaint(
-                  painter: _RingPainter(
-                    width: _ringWidth,
-                    color: _ringColor,
-                  ),
-                  child: _scaleAnimation.value == 1.0
-                      ? Transform.rotate(
-                    angle: (2 * pi) *
-                        _rotateAnimation.value *
-                        _directionX *
-                        _directionY,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: widget.children
-                          .asMap()
-                          .map((index, child) => MapEntry(index,
-                          _applyTransformations(child, index)))
-                          .values
-                          .toList(),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        margin: widget.fabMargin,
+        // Removes the default FAB margin
+        transform: Matrix4.translationValues(-16.0, 16.0, 0.0),
+        child: Stack(
+          alignment: widget.alignment,
+          children: <Widget>[
+            // Ring
+            Transform(
+              transform: Matrix4.translationValues(
+                _translationX,
+                _translationY,
+                0.0,
+              )..scale(_scaleAnimation.value),
+              alignment: FractionalOffset.center,
+              child: OverflowBox(
+                maxWidth: _ringDiameter,
+                maxHeight: _ringDiameter,
+                child: SizedBox(
+                  width: _ringDiameter,
+                  height: _ringDiameter,
+                  child: CustomPaint(
+                    painter: _RingPainter(
+                      width: _ringWidth,
+                      color: _ringColor,
                     ),
-                  )
-                      : Container(),
+                    child: _scaleAnimation.value == 1.0
+                        ? Transform.rotate(
+                      angle: (2 * pi) *
+                          _rotateAnimation.value *
+                          _directionX *
+                          _directionY,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: widget.children
+                            .asMap()
+                            .map((index, child) => MapEntry(index,
+                            _applyTransformations(child, index)))
+                            .values
+                            .toList(),
+                      ),
+                    )
+                        : Container(),
+                  ),
                 ),
               ),
             ),
-          ),
 
-          // FAB
-          Container(
-            width: widget.fabSize,
-            height: widget.fabSize,
-            child: RawMaterialButton(
-              fillColor: _colorAnimation!.value,
-              shape: _fabIconBorder,
-              elevation: widget.fabElevation,
-              onPressed: () {
-                if (_isAnimating) return;
+            // FAB
+            Container(
+              width: widget.fabSize,
+              height: widget.fabSize,
+              child: RawMaterialButton(
+                fillColor: _colorAnimation!.value,
+                shape: _fabIconBorder,
+                elevation: widget.fabElevation,
+                onPressed: () {
+                  if (_isAnimating) return;
 
-                if (_isOpen) {
-                  close();
-                } else {
-                  open();
-                }
-              },
-              child: Center(
-                child: widget.fabChild ?? (_scaleAnimation.value == 1.0
-                    ? widget.fabCloseIcon
-                    : widget.fabOpenIcon),
+                  if (_isOpen) {
+                    close();
+                  } else {
+                    open();
+                  }
+                },
+                child: Center(
+                  child: widget.fabChild ?? (_scaleAnimation.value == 1.0
+                      ? widget.fabCloseIcon
+                      : widget.fabOpenIcon),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

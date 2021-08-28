@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_behavior/one_line_behavior_sorted.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 class BehaviorCountScreen extends StatefulWidget {
   final int indexPage;
@@ -28,14 +28,14 @@ class _BehaviorCountScreenState extends BaseScreen<BehaviorCountScreen> {
   Widget? get flexibleSpace => FlexibleSpaceAppBar(
     items: [
       FlexibleSpaceAppBarItem(
-        mainNumber: weeklyHours.toString(),
-        description: 'שעות שבועיות',
-        color: Colors.red,
-      ),
-      FlexibleSpaceAppBarItem(
         mainNumber: totalHours.toString(),
         description: 'שעות עד כה',
         color: Colors.green,
+      ),
+      FlexibleSpaceAppBarItem(
+        mainNumber: weeklyHours.toString(),
+        description: 'שעות שבועיות',
+        color: Colors.red,
       ),
     ],
   );
@@ -47,16 +47,14 @@ class _BehaviorCountScreenState extends BaseScreen<BehaviorCountScreen> {
   Widget? get body => hours == null ? null : Column(
     children: List.generate(hours!.length, (index) {
       return OneLineBehaviorSorted(
-        str1: ' :סה"כ שיעורים',
-        str2: ' :שיעורים שבועיים',
+        str1: 'סה"כ שיעורים: ',
+        str2: 'שיעורים שבועיים: ',
         behavesForShort: {
           'value': hours![index].subject,
           'yesEvents':  hours![index].lessonsCount.toString(),
           'noEvents': hours![index].weeklyHours.toString(),
           'all': hours![index].totalEvents.toString(),
         },
-        // behavesForShort: [hours![index].subject, hours![index].lessonsCount.toString(),
-        //   hours![index].weeklyHours.toString(), hours![index].totalEvents.toString(),],
       );
     }),
   );

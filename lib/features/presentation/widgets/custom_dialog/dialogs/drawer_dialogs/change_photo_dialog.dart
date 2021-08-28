@@ -1,5 +1,5 @@
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 import '../../custom_dialog.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,40 +13,37 @@ class ChangePhotoDialog extends CustomDialog<ValueNotifier<String?>> {
   static Widget dialog(BuildContext context, {ValueNotifier<String?>? value}) => AlertDialog(
     content: Padding(
       padding: const EdgeInsets.all(0),
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'בחר תמונה',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(names.length, (index) => InkWell(
-                splashColor: Colors.grey[300],
-                onTap: () async {
-                  handleTap(index, value);
-                  Navigator.pop(context);
-                },
-                child: SizedBox(
-                  width: 500,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      names[index],
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'בחר תמונה',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(names.length, (index) => InkWell(
+              splashColor: Colors.grey[300],
+              onTap: () async {
+                handleTap(index, value);
+                Navigator.pop(context);
+              },
+              child: SizedBox(
+                width: 500,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    names[index],
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
-              )),
-            ),
-          ],
-        ),
+              ),
+            )),
+          ),
+        ],
       ),
     ),
     actions: [

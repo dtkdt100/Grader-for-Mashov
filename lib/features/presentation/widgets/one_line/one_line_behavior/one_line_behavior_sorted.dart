@@ -6,8 +6,8 @@ class OneLineBehaviorSorted extends StatelessWidget {
 
   const OneLineBehaviorSorted({Key? key,
     required this.behavesForShort,
-    this.str1 = " :מוצדקים",
-    this.str2 = " :לא מוצדקים",
+    this.str1 = "מוצדקים: ",
+    this.str2 = "לא מוצדקים: ",
   }) : super(key: key);
 
   @override
@@ -17,6 +17,29 @@ class OneLineBehaviorSorted extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10, top: 7, bottom: 3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '${behavesForShort['value']}',
+                    style:
+                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                  ),
+                  Text('$str1${behavesForShort['yesEvents']}',
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15)),
+                  Text('$str2${behavesForShort['noEvents']}',
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15)),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
               child: Column(
@@ -31,29 +54,6 @@ class OneLineBehaviorSorted extends StatelessWidget {
                     'אירועי התנהגות',
                     style: TextStyle(color: Colors.grey[600]),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10, top: 7, bottom: 3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    '${behavesForShort['value']}',
-                    style:
-                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                  ),
-                  Text('${behavesForShort['yesEvents']}$str1',
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15)),
-                  Text('${behavesForShort['noEvents']}$str2',
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15)),
                 ],
               ),
             ),

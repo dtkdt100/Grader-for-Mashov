@@ -5,11 +5,11 @@ import 'package:grader_for_mashov_new/features/data/material_design_icons_flutte
 import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_behavior/one_line_behavior_sorted.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/custom_fab_circular_menu.dart';
-import 'package:grader_for_mashov_new/features/utilities/sort/behavior/behavior_sort_by_subject_sort_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/sort/behavior/behavior_sort_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/sort/behavior/behavior_sort_by_subject_sort_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/sort/behavior/behavior_sort_utilities.dart';
 import '../../../widgets/one_line/one_line_behavior/one_line_behavior.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 enum SortMehtod { none, yesEvents, noEvents}
 
@@ -107,14 +107,14 @@ class _BehaviorScreenState extends BaseScreen<BehaviorScreen> {
   Widget? get flexibleSpace => FlexibleSpaceAppBar(
         items: [
           FlexibleSpaceAppBarItem(
-            color: Colors.red,
-            description: 'לא מצודקים',
-            mainNumber: noEvents.toString(),
-          ),
-          FlexibleSpaceAppBarItem(
             color: Colors.green,
             description: 'מצודקים',
             mainNumber: yesEvents.toString(),
+          ),
+          FlexibleSpaceAppBarItem(
+            color: Colors.red,
+            description: 'לא מצודקים',
+            mainNumber: noEvents.toString(),
           ),
         ],
       );

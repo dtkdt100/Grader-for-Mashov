@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 enum Name { anonymous, global }
 

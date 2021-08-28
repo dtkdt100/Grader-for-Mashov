@@ -16,18 +16,15 @@ class LeaderBoardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(3),
-        child: Card(
-          elevation: 1.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: buildCard(),
+    return Container(
+      margin: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(3),
+      child: Card(
+        elevation: 1.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
+        child: buildCard(),
       ),
     );
   }

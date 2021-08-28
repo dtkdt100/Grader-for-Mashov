@@ -1,7 +1,7 @@
 import 'dart:ui';
 export 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 abstract class CustomDialog<E> {
   final Function(BuildContext context, {E? value}) child;

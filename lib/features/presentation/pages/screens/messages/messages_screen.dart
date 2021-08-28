@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_msg.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 class MessagesScreen extends StatefulWidget {
   final int indexPage;
@@ -33,14 +33,14 @@ class _MessagesScreenState extends BaseScreen<MessagesScreen> {
   Widget? get flexibleSpace => FlexibleSpaceAppBar(
     items: [
       FlexibleSpaceAppBarItem(
-        description: 'הודעות שלא נקראו',
-        mainNumber: newMsgs.toString(),
-        color: Colors.red
-      ),
-      FlexibleSpaceAppBarItem(
           description: 'הודעות שנקראו',
           mainNumber: readMsgs.toString(),
           color: Colors.green
+      ),
+      FlexibleSpaceAppBarItem(
+          description: 'הודעות שלא נקראו',
+          mainNumber: newMsgs.toString(),
+          color: Colors.red
       ),
     ],
   );
@@ -67,72 +67,6 @@ class _MessagesScreenState extends BaseScreen<MessagesScreen> {
         padding: const EdgeInsets.all(12),
         child: GestureDetector(
           onTap: () {
-            if (page != 0) {
-              setState(() {
-                msgs = null;
-                page -= 1;
-              });
-            }
-            getMashovData();
-          },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.arrow_back_ios,
-                color: page == 0 ? Colors.grey : Colors.black,
-              ),
-              Text(
-                'הקודם',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: page == 0 ? Colors.grey : Colors.black),
-              )
-            ],
-          ),
-        ),
-      ),
-      Expanded(
-        child: Container(
-          margin: const EdgeInsets.only(),
-          height: 40,
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            children: List.generate(lengthOfPages.toInt(), (index) {
-              return Container(
-                decoration: BoxDecoration(
-                  border: const Border.fromBorderSide(BorderSide(width: 0.2)),
-                  color: page == index
-                      ? const Color(0xFF03a9f4)
-                      : Colors.transparent,
-                ),
-                width: 35,
-                margin: const EdgeInsets.all(1),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        msgs = null;
-                        page = index;
-                      });
-                      getMashovData();
-                    },
-                    child: Center(
-                      child: Text('${index + 1}'),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(12),
-        child: GestureDetector(
-          onTap: () {
             setState(() {
               if (lengthOfPages.toInt() != page + 1) {
                 msgs = null;
@@ -144,6 +78,10 @@ class _MessagesScreenState extends BaseScreen<MessagesScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Icon(Icons.arrow_back_ios,
+                  color: lengthOfPages.toInt() == page + 1
+                      ? Colors.grey
+                      : Colors.black),
               Text(
                 'הבא',
                 style: TextStyle(
@@ -151,11 +89,75 @@ class _MessagesScreenState extends BaseScreen<MessagesScreen> {
                     color: lengthOfPages.toInt() == page + 1
                         ? Colors.grey
                         : Colors.black),
+              )
+            ],
+          ),
+        ),
+      ),
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: Expanded(
+          child: Container(
+            margin: const EdgeInsets.only(),
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: List.generate(lengthOfPages.toInt(), (index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: const Border.fromBorderSide(BorderSide(width: 0.2)),
+                    color: page == index
+                        ? const Color(0xFF03a9f4)
+                        : Colors.transparent,
+                  ),
+                  width: 35,
+                  margin: const EdgeInsets.all(1),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          msgs = null;
+                          page = index;
+                        });
+                        getMashovData();
+                      },
+                      child: Center(
+                        child: Text('${index + 1}'),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(12),
+        child: GestureDetector(
+          onTap: () {
+            if (page != 0) {
+              setState(() {
+                msgs = null;
+                page -= 1;
+              });
+            }
+            getMashovData();
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'הקודם',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: page == 0 ? Colors.grey : Colors.black),
               ),
-              Icon(Icons.arrow_forward_ios,
-                  color: lengthOfPages.toInt() == page + 1
-                      ? Colors.grey
-                      : Colors.black)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: page == 0 ? Colors.grey : Colors.black,
+              ),
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class TopHeader extends StatelessWidget {
   const TopHeader({Key? key}) : super(key: key);

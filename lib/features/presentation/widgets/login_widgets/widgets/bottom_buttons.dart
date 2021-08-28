@@ -4,10 +4,9 @@ import 'package:grader_for_mashov_new/features/data/login_details/login_details.
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/home_page.dart';
 import '../../custom_dialog/bottom_dialogs/bottom_flash_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/login_widgets/widgets/password_text_field.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/navigator_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class BottomButtons extends StatefulWidget {
   final bool isPassword;

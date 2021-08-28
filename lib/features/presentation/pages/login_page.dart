@@ -27,22 +27,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: [
-            LoadingPage.backgroundDesign(),
-            GestureDetector(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: buildColumn(),
-              ),
-              onTap: removeAllFocus,
+      body: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          LoadingPage.backgroundDesign(),
+          GestureDetector(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: buildColumn(),
             ),
-          ],
-        ),
+            onTap: removeAllFocus,
+          ),
+        ],
       ),
     );
   }

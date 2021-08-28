@@ -9,6 +9,8 @@ class HomePageData {
   List<Grade>? grades;
   List<Lesson>? tableTime;
 
+  Map<String, dynamic>? infoPlayer;
+
   HomePageData({
     required this.msgs,
     required this.grades,
@@ -16,6 +18,7 @@ class HomePageData {
     required this.homeWorks,
     required this.hoursOfDay,
     required this.tableTime,
+    required this.infoPlayer,
   });
 
   static HomePageData clearHomePageData = HomePageData(
@@ -24,5 +27,6 @@ class HomePageData {
       hoursOfDay: '0',
       msgs: '0',
       tableTime: null,
-      homeWorks: null);
+      homeWorks: null,
+      infoPlayer: null);
 }

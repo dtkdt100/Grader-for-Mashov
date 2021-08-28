@@ -7,9 +7,9 @@ import 'leader_board_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/buttons/button.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/first_settings_card.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/leader_board_card.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/navigator_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 
 class LeaderBoardFirstScreen extends StatefulWidget {
@@ -33,7 +33,6 @@ class _LeaderBoardFirstScreenState
 
   @override
   Widget? get centerWidget => SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

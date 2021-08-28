@@ -9,7 +9,6 @@ class Result<E> {
     _statusCode = statusCode;
   }
 
-  //Returns true if value can be used, false otherwise.
   bool get isSuccess => exception == null && value != null && isOk;
 
   bool get isUnauthorized => statusCode == 401;

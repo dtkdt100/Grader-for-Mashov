@@ -16,32 +16,9 @@ class OneLineBehavior extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 7,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'שיעור ${event.lesson}',
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                        '${event.date.day}.${event.date.month}.${event.date.year}',
-                        style: TextStyle(color: Colors.grey[600])),
-                  ],
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.only(right: 10, top: 6, bottom: 5),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       event.text,
@@ -61,6 +38,29 @@ class OneLineBehavior extends StatelessWidget {
                       '${event.subject}(${event.reporter})',
                       style: TextStyle(color: Colors.grey[600]),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  top: 7,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      'שיעור ${event.lesson}',
+                      style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                        '${event.date.day}.${event.date.month}.${event.date.year}',
+                        style: TextStyle(color: Colors.grey[600])),
                   ],
                 ),
               ),

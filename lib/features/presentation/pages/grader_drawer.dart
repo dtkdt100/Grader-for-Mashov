@@ -11,15 +11,14 @@ import 'package:grader_for_mashov_new/features/presentation/pages/screens/leader
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/drawer_dialogs/leave_app_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/drawer_dialogs/log_out_dialog.dart';
 import 'screens/leader_board/screens/leader_board_first_screen.dart';
-import 'screens/leader_board/screens/leader_board_loading_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/messages/messages_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/table_time_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/drawer_widgets/drawer_options.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/drawer_widgets/mashov_picture.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/drawer_widgets/rate_on_google_play.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/drawer_widgets/top_header.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class GraderDrawer extends StatefulWidget {
   final int from;
@@ -45,7 +44,6 @@ class _GraderDrawerState extends State<GraderDrawer> {
         context: context,
         removeTop: true,
         child: ListView(
-          physics: const BouncingScrollPhysics(),
           children: [
             buildTopHeaderDesign(),
             buildPicture(),
@@ -104,7 +102,8 @@ class _GraderDrawerState extends State<GraderDrawer> {
             hoursOfDay: '0',
             msgs: '0',
             tableTime: null,
-            homeWorks: null);
+            homeWorks: null,
+            infoPlayer: null);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (c) => const HomePage()), (route) => false);
       } else {
@@ -124,18 +123,18 @@ class _GraderDrawerState extends State<GraderDrawer> {
 
   Widget buildPicture() => Row(
     children: <Widget>[
-      const Expanded(
-        flex: 5,
-        child: RateOnGooglePlay()
-      ),
-      const Spacer(
-        flex: 1,
-      ),
       Expanded(
         flex: 4,
         child: MashovPicture(
           filePath: filePath,
         ),
+      ),
+      const Spacer(
+        flex: 1,
+      ),
+      const Expanded(
+        flex: 5,
+        child: RateOnGooglePlay()
       ),
     ],
   );

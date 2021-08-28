@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:grader_for_mashov_new/core/avg_game_controller/avg_game_controller.dart';
 import 'package:grader_for_mashov_new/features/data/analyzer/analyzer.dart';
 import 'package:grader_for_mashov_new/features/models/home_page_data.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 import 'package:http/http.dart' as http;
 import 'package:grader_for_mashov_new/core/mashov_api/mashov_api.dart';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
@@ -56,6 +57,9 @@ class MashovUtilities {
     List<Lesson> day = (await getTableTime(single: true))[0];
     homePageData.hoursOfDay = day.length.toString();
     homePageData.tableTime = day;
+    callback();
+
+    homePageData.infoPlayer = await AvgGameController(MashovUtilities.loginData!.data).getInfo();
     callback();
 
     return homePageData;
@@ -219,17 +223,17 @@ class MashovUtilities {
   static int convertDateToDay() {
     switch (DateTime.now().weekday) {
       case (DateTime.sunday):
-        return 5;
-      case (DateTime.monday):
-        return 4;
-      case (DateTime.tuesday):
-        return 3;
-      case (DateTime.wednesday):
-        return 2;
-      case (DateTime.thursday):
-        return 1;
-      case (DateTime.friday):
         return 0;
+      case (DateTime.monday):
+        return 1;
+      case (DateTime.tuesday):
+        return 2;
+      case (DateTime.wednesday):
+        return 3;
+      case (DateTime.thursday):
+        return 4;
+      case (DateTime.friday):
+        return 5;
       case (DateTime.saturday):
         return 6;
     }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/custom_dialog.dart';
-import 'package:grader_for_mashov_new/features/utilities/download_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/download_utilities.dart';
 import 'package:http/http.dart' as http;
 import 'cookie_manager/cookie_manager.dart';
 import 'request_controller/request_controller.dart';
@@ -40,10 +40,10 @@ class ApiController {
     }
   }
 
-  ApiController(CookieManager manager, RequestController controller) :
-        _cookieManager = manager,
-      _requestController = controller, _rawDataProcessor = null,
-        _dataProcessor = null, jsonHeader = _setJsonHeader();
+
+  ApiController(this._cookieManager, this._requestController) :
+        _rawDataProcessor = null, _dataProcessor = null,
+        jsonHeader = _setJsonHeader();
 
 
   ///returns a list of schools.
@@ -111,14 +111,12 @@ class ApiController {
   }
 
   ///Returns a list of grades.
-  Future<Result<List<Grade>>> getGrades(String userId, {String? uniqueId}) async {
+  Future<Result<List<Grade>>> getGrades(String userId) {
     Map<String, String> headers = _authHeader();
-    if (uniqueId != null) {
-      headers["uniquId"] = uniqueId;
-    }
-    var hi = await _requestController.get(_gradesUrl(userId), headers);
-    var yo = _parseListResponse<Grade>(hi, Grade.fromJson, Api.grades);
-    return yo;
+
+    return _requestController.get(_gradesUrl(userId), headers).then((value) =>
+        _parseListResponse<Grade>(value, Grade.fromJson, Api.grades));
+
   }
 
   ///Returns a list of behave events.
@@ -374,7 +372,6 @@ class ApiController {
   ///Returns the user profile picture into given file parameter.
   Future<File> getPicture(String userId, File file) {
     Map<String, String> headers = _authHeader();
-    headers.addAll(_authHeader());
 
     return _requestController
         .get(_pictureUrl(userId), headers)
@@ -421,6 +418,7 @@ class ApiController {
         .then((attachment) => file.writeAsBytes(attachment));
   }
 
+
   ///Returns a list of E, using an authenticated request.
   Future<Result<List<E>>> _authList<E>(
       String url, Parser<E> parser, Api api) async {
@@ -438,7 +436,6 @@ class ApiController {
   ///Returns E, using an authenticated request.
   Future<Result<E>> _auth<E>(String url, Parser parser, Api api) async {
     Map<String, String> headers = _authHeader();
-    headers.addAll(_authHeader());
     return _requestController
         .get(url, headers)
         .then((response) => _parseResponse(response, parser, api));
@@ -463,13 +460,12 @@ class ApiController {
       http.Response response, Parser parser, Api api) {
     try {
       List src = json.decode(response.body);
+
       Result<List<E>> result = Result(
           exception: null,
           value: src.map<E>((e) => parser(e)).toList(),
           statusCode: response.statusCode);
 
-
-      //if it had not crashed, we know the data is good.
       if (_rawDataProcessor != null) {
         _rawDataProcessor!(response.body, api);
       }
@@ -484,7 +480,7 @@ class ApiController {
   }
 
   ///The authentication header.
-  Map<String, String> _authHeader() {
+  Map<String, String> _authHeader()   {
     Map<String, String> headers = {}..addAll(jsonHeader);
 
     ///uniquId is NOT a typo!
@@ -496,13 +492,13 @@ class ApiController {
     return headers;
   }
 
-  Map<String, String> _loginHeader({uniqueId}) {
+  Map<String, String> _loginHeader({String? uniqueId}) {
     Map<String, String> headers = {};
     headers["x-csrf-token"] = _cookieManager.csrfToken;
     headers["accept-encoding"] = "gzip";
     headers["Host"] = "web.mashov.info";
     if (uniqueId != null) {
-      headers["Cookie"] = "uniquId=$uniqueId;";
+      headers["Cookie"] = "uniquId=${_cookieManager.uniqueId};";
     }
     return headers;
   }

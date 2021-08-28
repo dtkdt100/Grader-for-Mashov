@@ -16,12 +16,7 @@ class ThreeDotsPicker extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
             height: 30,
             value: index,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(children[index]),
-              ],
-            ),
+            child: Text(children[index]),
           );
         });
       },

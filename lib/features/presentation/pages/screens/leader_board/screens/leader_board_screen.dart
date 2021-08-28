@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/core/avg_game_controller/avg_game_controller.dart';
-import 'package:grader_for_mashov_new/features/data/material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/leader_board_screen/leader_board_header.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/leader_board_screen/leader_board_positions.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/leader_board_widgets/leader_board_screen/leader_board_selection.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class LeaderBoardScreen extends StatefulWidget {
   const LeaderBoardScreen({Key? key}) : super(key: key);
@@ -41,7 +38,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       data: SharedPreferencesUtilities.themes.themeData,
       child: Scaffold(
         key: _scaffoldKey,
-        endDrawer: const GraderDrawer(3),
+        drawer: const GraderDrawer(3),
         body: Stack(
           children: [
             swipeDetector(listAll[currentAgeGroup] == null

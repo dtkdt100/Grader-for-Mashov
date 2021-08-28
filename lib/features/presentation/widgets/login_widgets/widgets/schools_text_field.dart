@@ -82,7 +82,6 @@ class SchoolTextFieldState extends State<SchoolTextField> {
               return DropdownMenuItem(
                   value: selectedSchool!.years[index],
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       index == 0
                           ? const Text(

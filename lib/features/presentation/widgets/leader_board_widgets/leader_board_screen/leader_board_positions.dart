@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 import 'package:like_button/like_button.dart';
 
 class LeaderBoardPositions extends StatefulWidget {
@@ -30,7 +30,6 @@ class _LeaderBoardPositionsState extends State<LeaderBoardPositions> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
       children: List.generate(widget.positions.length + 1, (index) {
         if (index == 0) {

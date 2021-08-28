@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/core/mashov_api/src/models/messages/conversation.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/messages/msg_screen.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class OneLineMsg extends StatelessWidget {
   final Conversation msg;
@@ -40,32 +40,9 @@ class OneLineMsg extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          '${msgSendTime.hour}:${msgSendTime.minute} '
-                          '${msgSendTime.day}.${msgSendTime.month}.${msgSendTime.year}',
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: msg.isNew
-                                  ? FontWeight.bold
-                                  : FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        msg.hasAttachments
-                            ? Icon(
-                                Icons.attachment,
-                                size: 20,
-                                color: Colors.grey[600],
-                              )
-                            : const SizedBox()
-                      ],
-                    ),
                     Flexible(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             msg.messages[0].senderName.split('/')[1],
@@ -87,6 +64,29 @@ class OneLineMsg extends StatelessWidget {
                           )
                         ],
                       ),
+                    ),
+                    Row(
+                      children: [
+                        msg.hasAttachments
+                            ? Icon(
+                          Icons.attachment,
+                          size: 20,
+                          color: Colors.grey[600],
+                        )
+                            : const SizedBox(),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${msgSendTime.hour}:${msgSendTime.minute} '
+                          '${msgSendTime.day}.${msgSendTime.month}.${msgSendTime.year}',
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: msg.isNew
+                                  ? FontWeight.bold
+                                  : FontWeight.w400),
+                        ),
+                      ],
                     ),
                   ],
                 ),

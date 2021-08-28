@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/data/material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/leader_board_bottom_sheet.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'leader_board_selection.dart';
@@ -75,11 +75,32 @@ class LeaderBoardHeaderState extends State<LeaderBoardHeader> {
                         children: [
                           const Spacer(),
                           IconButton(
+                              splashColor: Colors.grey,
+                              tooltip: 'Open navigation menu',
+                              onPressed: () {
+                                widget.scaffoldKey.currentState!
+                                    .openDrawer();
+                              },
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                              )),
+                          const Spacer(),
+                          const Text("לוח תוצאות",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28.0)),
+                          const Spacer(
+                            flex: 4,
+                          ),
+                          IconButton(
                               tooltip: 'הגדרות',
                               onPressed: () async {
                                 await LeaderBoardBottomSheet(
-                                        restart: widget.restart,
-                                        callBack: widget.load)
+                                    restart: widget.restart,
+                                    callBack: widget.load)
                                     .show(context);
                                 // await bottomSheet(context, () {
                                 //   callBack(ageGroupGlo);
@@ -87,27 +108,6 @@ class LeaderBoardHeaderState extends State<LeaderBoardHeader> {
                               },
                               icon: const Icon(
                                 Icons.settings,
-                                color: Colors.white,
-                              )),
-                          const Spacer(
-                            flex: 4,
-                          ),
-                          const Text("לוח תוצאות",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  letterSpacing: 0.2,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 28.0)),
-                          const Spacer(),
-                          IconButton(
-                              splashColor: Colors.grey,
-                              tooltip: 'Open navigation menu',
-                              onPressed: () {
-                                widget.scaffoldKey.currentState!
-                                    .openEndDrawer();
-                              },
-                              icon: const Icon(
-                                Icons.menu,
                                 color: Colors.white,
                               )),
                           const Spacer(),

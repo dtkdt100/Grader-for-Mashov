@@ -2,21 +2,21 @@ import 'dart:math';
 import 'package:grader_for_mashov_new/features/data/themes/light_themes.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/new_avg_dialog.dart';
 import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
-import '../custom_dialog.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
+import '../../custom_dialog.dart';
 
-class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
-  CalculateAvgDialog() : super(dialog);
+class ChangeOrderDialog extends CustomDialog<String>{
+  ChangeOrderDialog() : super(dialog);
 
   static bool selectAll = true;
   static List<bool> selected = [];
-  static bool loading = false;
+  static List<String> cards = ['ציונים', 'שיעורי בית', 'מערכת שעות', 'תחרות ממוצע ציונים'];
 
-  static Widget dialog(BuildContext context,
-      {Map<String, List<dynamic>>? value}) {
-    List<Grade> grades = List<Grade>.from(value!['grades']!);
-    List<String> subjects = List<String>.from(value['subjects']!);
+  static Widget dialog(BuildContext context, {String? value}) {
+
+
     if (selected.isEmpty) {
-      selected = List.generate(subjects.length, (index) => true);
+      selected = SharedPreferencesUtilities.homePageCards!;
     }
 
     return AlertDialog(
@@ -26,7 +26,7 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "אפשרויות מתקדמות",
+              "שנה סידור במסך הבית",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
@@ -34,7 +34,7 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
               height: 15,
             ),
             const Text(
-              "בחר מקצועות שישתתפו בחישוב הממוצע: ",
+              "בחר כרטיסים שיוצגו במסך הבית: ",
               style: TextStyle(fontSize: 15),
             ),
             const SizedBox(
@@ -58,7 +58,7 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
                     if (val!) {
                       selectAll = !selectAll;
                       selected.replaceRange(0, selected.length,
-                          List.generate(subjects.length, (index) => true));
+                          List.generate(cards.length, (index) => true));
                     }
                   });
                 },
@@ -70,7 +70,7 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
             ConstrainedBox(
               constraints: BoxConstraints(
                   minHeight: 0,
-                  maxHeight: 250,
+                  maxHeight: 150,
                   minWidth: MediaQuery.of(context).size.width),
               child: SingleChildScrollView(
                   padding: EdgeInsets.zero,
@@ -81,11 +81,11 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
                     ),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: List.generate(subjects.length, (index) {
+                        children: List.generate(cards.length, (index) {
                           return CheckboxListTile(
                             activeColor: const Color(0xFF03a9f4),
                             controlAffinity: ListTileControlAffinity.leading,
-                            title: Text(subjects[index]),
+                            title: Text(cards[index]),
                             value: selected[index],
                             onChanged: (val) {
                               setState(() {
@@ -101,45 +101,18 @@ class CalculateAvgDialog extends CustomDialog<Map<String, List<dynamic>>?> {
                         })),
                   )),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      loading = true;
-                      setState(() {});
-
-                      Future.delayed(
-                          Duration(milliseconds: 150 + Random().nextInt(450)),
-                          () {
-                            List<String> avoid = [];
-                            for (int i = 0; i < subjects.length; i++) {
-                              if (!selected[i]) avoid.add(subjects[i]);
-                            }
-                            NewAvgDialog().showWithAnimation(context,
-                                value: MashovUtilities.calculateAvg(grades,
-                                    avoidSub: avoid, fixed: 2));
-                            setState((){
-                              loading = false;
-                            });
-                          });
-
-                    },
-                    child: !loading
-                        ? const Text('חשב/י', style: TextStyle(fontSize: 16, color: Colors.black),)
-                        : const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                              strokeWidth: 3.3,
-                            color: Colors.black,
-                            ),
-                        )),
-              ],
-            )
           ],
         );
       }),
+      actions: [
+        TextButton(
+          onPressed: () async {
+             await SharedPreferencesUtilities.setHomePageCards(selected);
+             Navigator.pop(context);
+          },
+          child: const Text('אישור')
+        )
+      ],
     );
   }
 }

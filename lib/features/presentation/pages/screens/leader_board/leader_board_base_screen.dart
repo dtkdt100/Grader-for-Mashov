@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/loading_page.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 abstract class LeaderBoardBaseScreen<T extends StatefulWidget> extends State<T> {
   Duration animationDuration = const Duration(milliseconds: 350);
@@ -32,7 +32,7 @@ abstract class LeaderBoardBaseScreen<T extends StatefulWidget> extends State<T> 
           LoadingPage.backgroundDesign(),
           Scaffold(
             backgroundColor: Colors.transparent,
-            endDrawer: const GraderDrawer(3),
+            drawer: const GraderDrawer(3),
             appBar: AppBar(
               elevation: 0.0,
               backgroundColor: Colors.transparent,

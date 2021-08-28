@@ -19,14 +19,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Grader',
-      home: Directionality(
+      builder: (context, widget) => Directionality(
         textDirection: TextDirection.rtl,
-        child: Theme(
-            data: Theme.of(context)
-                .copyWith(splashFactory: MaterialInkSplash.splashFactory),
-            child: const LoadingPage()),
+        child: ScrollConfiguration(
+            behavior: const ScrollBehaviorModified(), child: widget!),
       ),
+      home: Theme(
+          data: Theme.of(context)
+              .copyWith(splashFactory: MaterialInkSplash.splashFactory),
+          child: const LoadingPage()),
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
+class ScrollBehaviorModified extends ScrollBehavior {
+  const ScrollBehaviorModified();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/lesson.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class OneLineLesson extends StatelessWidget {
   final Lesson lesson;
@@ -35,17 +35,29 @@ class OneLineLesson extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          pad1 == 2.0 ? const SizedBox() : Text(
-            _timeStartAndEnd(lesson),
-            style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-          ),
           Flexible(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    color: Colors.grey,
+                    shape: BoxShape.circle,
+                  ),
+                  // child: Center(child: Text('${counter+lessonFree}', style: TextStyle(color: Colors.white),)),
+                  child: Center(
+                      child: Text(
+                        '${lesson.lesson}',
+                        style: const TextStyle(color: Colors.white),
+                      )),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
                 Flexible(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         lesson.subject,
@@ -67,25 +79,12 @@ class OneLineLesson extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    shape: BoxShape.circle,
-                  ),
-                  // child: Center(child: Text('${counter+lessonFree}', style: TextStyle(color: Colors.white),)),
-                  child: Center(
-                      child: Text(
-                        '${lesson.lesson}',
-                        style: const TextStyle(color: Colors.white),
-                      )),
-                ),
               ],
             ),
+          ),
+          pad1 == 2.0 ? const SizedBox() : Text(
+            _timeStartAndEnd(lesson),
+            style: TextStyle(fontSize: 14, color: Colors.grey[700]),
           ),
         ],
       ),

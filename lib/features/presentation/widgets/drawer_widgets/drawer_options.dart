@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/data/material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class DrawerOptions extends StatelessWidget {
   static Map<String, IconData> drawerOptions = {
@@ -19,7 +18,13 @@ class DrawerOptions extends StatelessWidget {
   };
 
   final Function(int) callBack;
-  const DrawerOptions({Key? key, required this.callBack}) : super(key: key);
+  DrawerOptions({Key? key, required this.callBack}) : super(key: key);
+
+  final Widget divider = Divider(
+    color: const Color(0xFF03a9f4).withOpacity(SharedPreferencesUtilities.themes.opacity),
+    thickness: 0.8,
+    height: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -27,63 +32,49 @@ class DrawerOptions extends StatelessWidget {
       children: List.generate(drawerOptions.length + 1, (index) {
         List<String> keys = List<String>.from(drawerOptions.keys);
 
+
         if (index == drawerOptions.length) {
-          return Divider(
-            color: const Color(0xFF03a9f4).withOpacity(SharedPreferencesUtilities.themes.opacity),
-            thickness: 0.8,
-            height: 0,
-          );
+          return divider;
         }
 
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Divider(
-              color: const Color(0xFF03a9f4).withOpacity(SharedPreferencesUtilities.themes.opacity),
-              thickness: 0.8,
-              height: 0,
-            ),
+            divider,
             InkWell(
               onTap: () {
-                // int wherePop = GraderDrawer.drawerOptions.indexOf('התנתקות');
-                // if (!(index == wherePop || index == wherePop + 1)) {
-                //   Navigator.pop(context);
-                // }
-
-                //pushToAntherPage(index);
                 if (!(index == 9 || index == 9 + 1)) {
                   Navigator.pop(context);
                 }
                 callBack(index);
               },
-              child: Container(
-                padding:
-                const EdgeInsets.only(right: 7, top: 10, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      keys[index],
-                      style: TextStyle(
-                          color: index == 3
-                              ? const Color(0xffdb3d54)
-                              : Colors.black),
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Icon(
-                      drawerOptions[keys[index]],
-                      color: Colors.black54,
-                      size: 21,
-                    ),
-                  ],
-                ),
-              ),
+              child: buildOneLineDrawer(index, keys[index]),
             ),
           ],
         );
       }),
     );
   }
+
+  Widget buildOneLineDrawer(int index, String key) => Container(
+    padding: const EdgeInsets.only(right: 7, top: 10, bottom: 10),
+    child: Row(
+      children: <Widget>[
+        Icon(
+          drawerOptions[key],
+          color: Colors.black54,
+          size: 21,
+        ),
+        const SizedBox(
+          width: 6,
+        ),
+        Text(
+          key,
+          style: TextStyle(
+              color: index == 3
+                  ? const Color(0xffdb3d54)
+                  : Colors.black),
+        ),
+      ],
+    ),
+  );
 }

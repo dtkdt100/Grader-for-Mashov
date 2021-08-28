@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class CardDesign extends StatelessWidget {
   final String title;
@@ -25,6 +25,11 @@ class CardDesign extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              Text(
+                title,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 20),
+              ),
               ElevatedButton(
                 child: const Text(
                   'ראה עוד',
@@ -36,11 +41,6 @@ class CardDesign extends StatelessWidget {
                       seeMoreColor.withOpacity(SharedPreferencesUtilities.themes.opacity),
                     )),
                 //color: Color(0xFFffac52).withOpacity(theme.opacity),
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ],
           ),

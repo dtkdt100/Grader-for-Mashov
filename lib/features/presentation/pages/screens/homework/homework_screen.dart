@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_homework.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 class HomeworkScreen extends StatefulWidget {
   final int indexPage;
@@ -21,16 +21,13 @@ class _HomeworkScreenState extends BaseScreen<HomeworkScreen> {
   int get from => widget.indexPage;
 
   @override
-  Widget? get body => homeWorks == null ? null : Directionality(
-    textDirection: TextDirection.rtl,
-    child: Column(
-      children: List.generate(homeWorks!.length, (index) {
-        return OneLineHomework(
-          index: index,
-          homework: homeWorks![index],
-        );
-      }),
-    ),
+  Widget? get body => homeWorks == null ? null : Column(
+    children: List.generate(homeWorks!.length, (index) {
+      return OneLineHomework(
+        index: index,
+        homework: homeWorks![index],
+      );
+    }),
   );
 
   @override

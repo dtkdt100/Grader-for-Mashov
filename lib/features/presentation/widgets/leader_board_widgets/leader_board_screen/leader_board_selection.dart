@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 const SCALE_FRACTION = 0.7;
 const FULL_SCALE = 1.0;
@@ -46,7 +46,6 @@ class LeaderBoardSelectionState extends State<LeaderBoardSelection> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: const BouncingScrollPhysics(),
       children: <Widget>[
         Container(
           color: Colors.transparent,
@@ -62,21 +61,23 @@ class LeaderBoardSelectionState extends State<LeaderBoardSelection> {
               }
               return true;
             },
-            child: PageView.builder(
-              reverse: true,
-              onPageChanged: (pos) {
-                setState(() {
-                  currentPage = pos;
-                  widget.callBack(options[currentPage]);
-                });
-              },
-              physics: const BouncingScrollPhysics(),
-              controller: pageController,
-              itemCount: options.length,
-              itemBuilder: (context, index) {
-                final scale = max(SCALE_FRACTION, (FULL_SCALE - (index - page).abs()) + viewPortFraction);
-                return circleOffer(scale, index, options[index]);
-              },
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: PageView.builder(
+                reverse: true,
+                onPageChanged: (pos) {
+                  setState(() {
+                    currentPage = pos;
+                    widget.callBack(options[currentPage]);
+                  });
+                },
+                controller: pageController,
+                itemCount: options.length,
+                itemBuilder: (context, index) {
+                  final scale = max(SCALE_FRACTION, (FULL_SCALE - (index - page).abs()) + viewPortFraction);
+                  return circleOffer(scale, index, options[index]);
+                },
+              ),
             ),
           ),
         ),

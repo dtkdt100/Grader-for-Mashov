@@ -4,8 +4,8 @@ import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.da
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_lesson.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/three_dots_picker.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class TableTimeScreen extends StatefulWidget {
   final int indexPage;
@@ -17,7 +17,7 @@ class TableTimeScreen extends StatefulWidget {
 
 class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
   List<List<Lesson>>? lessons;
-  List<String> days = ["שישי", "חמישי", "רביעי", "שלישי", "שני", "ראשון"];
+  List<String> days = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
   List<List<bool>?> currentHour = [];
 
   @override
@@ -31,21 +31,16 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
         length: 6,
         initialIndex: MashovUtilities.convertDateToDay() == 6 ? 5 : MashovUtilities.convertDateToDay(),
         child: Scaffold(
-          endDrawer: const GraderDrawer(2),
+          drawer: const GraderDrawer(2),
           appBar: AppBar(
             backgroundColor: SharedPreferencesUtilities.themes.colorAppBar,
-            leading: ThreeDotsPicker(
+            actions: [ThreeDotsPicker(
               children: const ['רענן'],
               selected: (i){
                 reload();
               },
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const <Widget>[
-                Text('מערכת שעות'),
-              ],
-            ),
+            )],
+            title: const Text('מערכת שעות'),
             bottom: TabBar(
                 indicatorColor: Colors.yellow,
                 labelPadding: const EdgeInsets.all(0),
@@ -63,11 +58,10 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
                   );
                 }
                 return ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: List.generate(lessons![index2].length, (index) {
+                  children: List.generate(lessons![5-index2].length, (index) {
                     return OneLineLesson(
-                      lesson: lessons![index2][index],
-                      glow: currentHour[index2] == null ? false : currentHour[index2]![index],
+                      lesson: lessons![5-index2][index],
+                      glow: currentHour[5-index2] == null ? false : currentHour[5-index2]![index],
                     );
                   }),
                 );
@@ -98,41 +92,22 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
 
   void findCurrentHour() {
     DateTime now = DateTime.now();
-    //now = DateTime.parse("2020-12-23 12:46:00");
+    //now = DateTime.parse("2021-09-04 12:46:00");
     List<Lesson> lessonsDay = [];
-    int? day;
+    int day = now.weekday;
     int? lesson;
 
-    switch (now.weekday) {
-      case (1):
-        lessonsDay = lessons![4];
-        day = 4;
-        break;
-      case (2):
-        lessonsDay = lessons![3];
-        day = 3;
-        break;
-      case (3):
-        lessonsDay = lessons![2];
-        day = 2;
-        break; //
-      case (4):
-        lessonsDay = lessons![1];
-        day = 1;
-        break;
-      case (5):
-        lessonsDay = lessons![0];
-        day = 0;
-        break;
-      case (6):
-        lessonsDay = [];
-        day = -1;
-        break;
-      case (7):
-        lessonsDay = lessons![5];
-        day = 5;
-        break;
+    if (now.weekday == 6) {
+      lessonsDay = [];
+      day = -1;
+    } else if (now.weekday == 7) {
+      lessonsDay = lessons![5];
+      day = 5;
+    } else {
+      lessonsDay = lessons![5 - now.weekday];
+      day = 5 - now.weekday;
     }
+
     if (lessonsDay.isNotEmpty) {
       for (int i = 0; i < lessonsDay.length; i++) {
         String years =
@@ -147,11 +122,11 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
       if (lesson != null) {
         Timer(const Duration(milliseconds: 250), () {
           setState(() {
-            currentHour[day!]![lesson!] = true;
+            currentHour[day]![lesson!] = true;
           });
           Timer(const Duration(milliseconds: 10000), () {
             setState(() {
-              currentHour[day!]![lesson!] = false;
+              currentHour[day]![lesson!] = false;
             });
           });
         });

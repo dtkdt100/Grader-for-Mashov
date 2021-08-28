@@ -308,71 +308,68 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                 child: SizedBox(
                     width: width,
                     child: Card(
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: 0,
-                            maxHeight: 250,
-                          ),
-                          child: ListView(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            children: filteredSuggestions!.map((suggestion) {
-                              return Container(
-                                padding: EdgeInsets.zero,
-                                child: Row(children: [
-                                  Expanded(
-                                      child: InkWell(
-                                          splashFactory: MaterialInkSplash.splashFactory,
-                                          child: Column(
-                                            children: [
-                                              const Divider(
-                                                height: 0,
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    right: 8,
-                                                    top: 11,
-                                                    bottom: 11),
-                                                child: Align(
-                                                  child: Text(
-                                                    "$suggestion",
-                                                    style: const TextStyle(
-                                                        fontSize: 14.5),
-                                                  ),
-                                                  alignment:
-                                                      Alignment.centerRight,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          minHeight: 0,
+                          maxHeight: 250,
+                        ),
+                        child: ListView(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          children: filteredSuggestions!.map((suggestion) {
+                            return Container(
+                              padding: EdgeInsets.zero,
+                              child: Row(children: [
+                                Expanded(
+                                    child: InkWell(
+                                        splashFactory: MaterialInkSplash.splashFactory,
+                                        child: Column(
+                                          children: [
+                                            const Divider(
+                                              height: 0,
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8,
+                                                  top: 11,
+                                                  bottom: 11),
+                                              child: Align(
+                                                child: Text(
+                                                  "$suggestion",
+                                                  style: const TextStyle(
+                                                      fontSize: 14.5),
                                                 ),
+                                                alignment:
+                                                    Alignment.centerRight,
                                               ),
-                                            ],
-                                            mainAxisSize: MainAxisSize.min,
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              if (submitOnSuggestionTap!) {
-                                                String newText =
-                                                    suggestion.toString();
-                                                textField!.controller!.text =
-                                                    newText;
-                                                textField!.focusNode!.unfocus();
-                                                itemSubmitted!(suggestion);
-                                                if (clearOnSubmit!) {
-                                                  clear();
-                                                }
-                                              } else {
-                                                String newText =
-                                                    suggestion.toString();
-                                                textField!.controller!.text =
-                                                    newText;
-                                                textChanged!(newText);
+                                            ),
+                                          ],
+                                          mainAxisSize: MainAxisSize.min,
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            if (submitOnSuggestionTap!) {
+                                              String newText =
+                                                  suggestion.toString();
+                                              textField!.controller!.text =
+                                                  newText;
+                                              textField!.focusNode!.unfocus();
+                                              itemSubmitted!(suggestion);
+                                              if (clearOnSubmit!) {
+                                                clear();
                                               }
-                                            });
-                                          }))
-                                ]),
-                              );
-                            }).toList(),
-                          ),
+                                            } else {
+                                              String newText =
+                                                  suggestion.toString();
+                                              textField!.controller!.text =
+                                                  newText;
+                                              textChanged!(newText);
+                                            }
+                                          });
+                                        }))
+                              ]),
+                            );
+                          }).toList(),
                         ),
                       ),
                     ))));

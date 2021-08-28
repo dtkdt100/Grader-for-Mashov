@@ -5,11 +5,11 @@ import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialo
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/custom_fab_circular_menu.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/body_grades_design.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
-import '../../../../utilities/sort/grades/grades_sort_by_each_grade_sort_utilities.dart';
-import '../../../../utilities/sort/grades/grades_sort_utilities.dart';
-import '../../../../utilities/sort/grades/grades_sorted_by_subject_sort_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/navigator_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/sort/grades/grades_sort_by_each_grade_sort_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/sort/grades/grades_sort_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/sort/grades/grades_sorted_by_subject_sort_utilities.dart';
 import '../../base_screen.dart';
 
 class GradesScreen extends StatefulWidget {
@@ -114,12 +114,12 @@ class _GradesScreenState extends BaseScreen<GradesScreen> {
   Widget? get flexibleSpace => FlexibleSpaceAppBar(
     items: [
       FlexibleSpaceAppBarItem(
-        description: 'ממוצע',
-        mainNumber: avg,
-      ),
-      FlexibleSpaceAppBarItem(
         description: 'מבחנים',
         mainNumber: grades == null ? '0' : grades!.length.toString(),
+      ),
+      FlexibleSpaceAppBarItem(
+        description: 'ממוצע',
+        mainNumber: avg,
       ),
     ],
   );

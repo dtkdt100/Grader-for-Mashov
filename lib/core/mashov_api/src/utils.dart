@@ -3,7 +3,7 @@ import 'models/models.dart';
 ///Some nice utility functions
 class Utils {
   ///Returns an empty string if value is null, the value itself otherwise.
-  static String string(dynamic value) => value != null ? "$value" : "";
+  static String string(String? value) => value ?? "";
 
   ///Returns 0 if value is null, the value itself otherwise.
   static int integer(int? value) => value ?? 0;
@@ -38,8 +38,8 @@ class Utils {
   static Map<String, List<String>> decodeHeaders(Map<String, String> headers) =>
       headers.map((key, value) => MapEntry(key, value.split(';')));
 
-  //merges two maps, with an advantage to the first map(in case of same key and value,
-  //the value of the first map will be taken.
+  ///merges two maps, with an advantage to the first map(in case of same key and value,
+  ///the value of the first map will be taken.
   static Map<dynamic, dynamic> mergeMaps(Map<dynamic, dynamic> map1,
       Map<dynamic, dynamic> map2) {
     Map merged = Map.from(map1);

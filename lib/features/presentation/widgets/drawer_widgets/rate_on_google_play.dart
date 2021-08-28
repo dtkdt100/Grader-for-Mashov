@@ -27,27 +27,24 @@ class RateOnGooglePlay extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.network(
-                  "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Play_Prism.max-500x500.png"),
-              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text("דרגו כעת ב-",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.0)),
-                  ),
+                  Text("דרגו כעת ב-",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10.0)),
                   Text("Google play",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0))
                 ],
-              )
+              ),
+              const Spacer(),
+              Image.network(
+                  "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Play_Prism.max-500x500.png")
             ],
           ),
         ),

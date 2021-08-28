@@ -3,17 +3,21 @@ import 'dart:io';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
 import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
 import 'package:grader_for_mashov_new/features/models/home_page_data.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/home_page_dialogs/change_order_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'mashov_utilities.dart';
+
 class SharedPreferencesUtilities {
-  static Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+  static Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
+  static SharedPreferences? prefs;
 
   static const String _keyLoginData = 'loginData';
   static const String _keyPicture = 'Picture';
   static const String _keyThemeMode = 'mode';
   static const String _keyRemoveZeros = 'removeZeros';
   static const String _keyLeaderBoard = 'isLogInToLeaderBoard';
+  static const String _keyHomePageCards = 'homePageCards';
 
   static Themes themes = LightThemes();
   static String? filePath;
@@ -21,25 +25,31 @@ class SharedPreferencesUtilities {
   static bool removeZeros = false;
   static bool connectedToLeaderBoard = false;
   static bool alreadyLogin = false;
+  static List<bool>? homePageCards;
 
   ///Get all
-  static Future<void> getAll() async {
-    await getLoginData();
-    await getPicture();
-    await getTheme();
-    await getZero();
-    await getLeaderBoard();
-    await getAlreadyLogin();
+  static void getAll() {
+    getLoginData();
+    getPicture();
+    getTheme();
+    getZero();
+    getLeaderBoard();
+    getAlreadyLogin();
+    getHomePageCards();
+  }
+
+  static Future<void> initSharedPrefs() async {
+    prefs = await prefsFuture;
   }
 
   ///Login data
   static Future<void> setLoginData(LoginDetails loginData) async {
     loginDetails = loginData;
-    (await prefs).setString(_keyLoginData, _encode(loginData.toJson()));
+    await prefs!.setString(_keyLoginData, _encode(loginData.toJson()));
   }
 
-  static Future<LoginDetails?> getLoginData() async {
-    String? loginDataString = (await prefs).getString(_keyLoginData);
+  static LoginDetails? getLoginData() {
+    String? loginDataString = prefs!.getString(_keyLoginData);
 
     if (loginDataString == null) return null;
 
@@ -50,11 +60,11 @@ class SharedPreferencesUtilities {
   ///Picture
   static Future<void> setPicture(String path) async {
     filePath = path;
-    (await prefs).setString(_keyPicture, path);
+    await prefs!.setString(_keyPicture, path);
   }
 
-  static Future<File?> getPicture() async {
-    String? path = (await prefs).getString(_keyPicture);
+  static File? getPicture() {
+    String? path = prefs!.getString(_keyPicture);
 
     if (path == null) return null;
 
@@ -62,14 +72,31 @@ class SharedPreferencesUtilities {
     return File(path);
   }
 
+  ///Home page cards
+  static Future<void> setHomePageCards(List<bool> cards) async {
+    homePageCards = cards;
+    await prefs!.setString(_keyHomePageCards, _encode(cards));
+  }
+
+  static List<bool>? getHomePageCards() {
+    String? cards = prefs!.getString(_keyHomePageCards);
+    if (cards == null) {
+      homePageCards =
+          List.generate(ChangeOrderDialog.cards.length, (index) => true);
+      return null;
+    }
+    homePageCards = _decodeList<bool>(cards);
+    return homePageCards;
+  }
+
   ///Zeros
   static Future<void> setZero(bool zero) async {
     removeZeros = zero;
-    (await prefs).setBool(_keyRemoveZeros, zero);
+    await prefs!.setBool(_keyRemoveZeros, zero);
   }
 
-  static Future<bool?> getZero() async {
-    bool? zero = (await prefs).getBool(_keyRemoveZeros);
+  static bool? getZero() {
+    bool? zero = prefs!.getBool(_keyRemoveZeros);
     if (zero == null) return null;
     removeZeros = zero;
     return zero;
@@ -78,11 +105,11 @@ class SharedPreferencesUtilities {
   ///LeaderBoard
   static Future<void> setLeaderBoard(bool connected) async {
     connectedToLeaderBoard = connected;
-    (await prefs).setBool(_keyLeaderBoard, connected);
+    await prefs!.setBool(_keyLeaderBoard, connected);
   }
 
-  static Future<bool?> getLeaderBoard() async {
-    bool? connected = (await prefs).getBool(_keyLeaderBoard);
+  static bool? getLeaderBoard() {
+    bool? connected = prefs!.getBool(_keyLeaderBoard);
 
     if (connected == null) return null;
 
@@ -93,11 +120,11 @@ class SharedPreferencesUtilities {
   ///Themes
   static Future<void> setTheme(String mode) async {
     themes = mode == 'dark' ? DarkThemes() : LightThemes();
-    (await prefs).setString(_keyThemeMode, mode);
+    await prefs!.setString(_keyThemeMode, mode);
   }
 
-  static Future<Themes?> getTheme() async {
-    String? mode = (await prefs).getString(_keyThemeMode);
+  static Themes? getTheme() {
+    String? mode = prefs!.getString(_keyThemeMode);
 
     if (mode == null) return null;
 
@@ -106,8 +133,8 @@ class SharedPreferencesUtilities {
   }
 
   ///Already login
-  static Future<bool?> getAlreadyLogin() async {
-    String? login = (await prefs).getString('Username');
+  static bool? getAlreadyLogin() {
+    String? login = prefs!.getString('Username');
     alreadyLogin = login != null;
     if (login == null) return false;
     return true;
@@ -127,14 +154,15 @@ class SharedPreferencesUtilities {
         hoursOfDay: '0',
         msgs: '0',
         tableTime: null,
-        homeWorks: null);
-    (await prefs).clear();
+        homeWorks: null,
+        infoPlayer: null);
+    await prefs!.clear();
   }
 
-
-  static String _encode(Map<String, dynamic> map) => json.encode(map);
+  static String _encode(Object value) => json.encode(value);
 
   static Map<String, E> _decode<E>(String map) =>
       Map<String, E>.from(json.decode(map));
 
+  static List<E> _decodeList<E>(String list) => List<E>.from(json.decode(list));
 }

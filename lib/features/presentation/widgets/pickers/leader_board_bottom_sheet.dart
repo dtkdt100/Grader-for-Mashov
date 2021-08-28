@@ -2,9 +2,9 @@ import 'package:grader_for_mashov_new/core/avg_game_controller/avg_game_controll
 import 'package:grader_for_mashov_new/features/data/animation/material_ink_splash.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/custom_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/leader_board_dialogs/delete_user_dialog.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 import '../custom_dialog/dialogs/leader_board_dialogs/change_name_dialog.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 
 class LeaderBoardBottomSheet {
   final VoidCallback restart;
@@ -60,17 +60,14 @@ class LeaderBoardBottomSheet {
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              _childDesign("שנה שם", _changeName, context),
-              _childDesign("התנתק מהמשחק", deleteUser, context, textColor: const Color(0xffdb3d54)),
-              _childDesign("בטל", (c){Navigator.pop(context);}, context),
-            ],
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _childDesign("שנה שם", _changeName, context),
+            _childDesign("התנתק מהמשחק", deleteUser, context, textColor: const Color(0xffdb3d54)),
+            _childDesign("בטל", (c){Navigator.pop(context);}, context),
+          ],
         );
       },
     );

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart' as path;
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart' as noti;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class DownloadUtilities {
   final String link;
@@ -18,13 +18,13 @@ class DownloadUtilities {
     required this.fileName,
   });
 
-  static noti.FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+  static FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
   static void initNotification() {
-    flutterLocalNotificationsPlugin = noti.FlutterLocalNotificationsPlugin();
-    const android = noti.AndroidInitializationSettings('@mipmap/icon_grader');
-    const iOS = noti.IOSInitializationSettings();
-    const initSettings = noti.InitializationSettings(android: android, iOS: iOS);
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const android = AndroidInitializationSettings('@mipmap/icon_grader');
+    const iOS = IOSInitializationSettings();
+    const initSettings = InitializationSettings(android: android, iOS: iOS);
 
     flutterLocalNotificationsPlugin!.initialize(initSettings, onSelectNotification: _onSelectNotification);
   }
@@ -51,22 +51,23 @@ class DownloadUtilities {
   }
 
   static Future<void> showNotification(Map<String, dynamic> downloadStatus) async {
-    const android = noti.AndroidNotificationDetails(
-        'channel id',
-        'channel name',
-        'channel description',
-        priority: noti.Priority.high,
-        importance: noti.Importance.max
+    const android = AndroidNotificationDetails(
+      'Grader-123',
+      'Grader',
+      'Local Notification for Grader',
+      priority: Priority.high,
+      importance: Importance.max,
+      styleInformation: BigTextStyleInformation(''),
     );
-    const iOS = noti.IOSNotificationDetails();
-    const platform = noti.NotificationDetails(android: android, iOS: iOS);
+    const iOS = IOSNotificationDetails();
+    const platform = NotificationDetails(android: android, iOS: iOS);
     final json = jsonEncode(downloadStatus);
     final isSuccess = downloadStatus['isSuccess'];
 
     await flutterLocalNotificationsPlugin!.show(
-        0, // notification id
-        isSuccess ? 'Downloaded Successfully' : 'Failure',
-        isSuccess ? 'Tap to open ${downloadStatus['fileName']}' : 'There was an error while downloading ${downloadStatus['fileName']}',
+        downloadStatus['fileName'].toString().length,
+        isSuccess ? 'הורדה הושלמה' : 'שגיאה',
+        isSuccess ? 'הקש כדי לפתוח את המסמך: ${downloadStatus['fileName']}' : 'קראת שגיאה בהורדה של המסמך  ${downloadStatus['fileName']}',
         platform,
         payload: json
     );

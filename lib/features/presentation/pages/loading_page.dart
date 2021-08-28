@@ -6,9 +6,9 @@ import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/login_page.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/home_page.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/already_log_in_dialog.dart';
-import 'package:grader_for_mashov_new/features/utilities/mashov_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/navigator_utilities.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/navigator_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -79,13 +79,14 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> loadMemo() async {
-    await SharedPreferencesUtilities.getAll();
+    await SharedPreferencesUtilities.initSharedPrefs();
+    SharedPreferencesUtilities.getAll();
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (SharedPreferencesUtilities.alreadyLogin) {
       await AlreadyLogInDialog().showWithAnimation(context);
       await SharedPreferencesUtilities.clearAllPreferences();
-      await SharedPreferencesUtilities.getAll();
+      SharedPreferencesUtilities.getAll();
     }
 
     setState(() {

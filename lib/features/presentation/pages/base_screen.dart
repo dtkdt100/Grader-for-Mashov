@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/three_dots_picker.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
   Widget? leading;
@@ -30,7 +30,7 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
     return Theme(
       data: SharedPreferencesUtilities.themes.themeData,
       child: Scaffold(
-        endDrawer: GraderDrawer(from),
+        drawer: GraderDrawer(from),
         floatingActionButton: floatingActionButton,
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
@@ -42,27 +42,20 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
               elevation: 5.0,
               forceElevated: true,
               bottom: bottom,
-              leading: ThreeDotsPicker(
+              actions: [ThreeDotsPicker(
                 children: threeDotsLabels,
                 selected: selected,
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(title, style: const TextStyle(fontSize: 21)),
-                ],
-              ),
+              )],
+              title: Text(title, style: const TextStyle(fontSize: 21)),
               expandedHeight: expandedHeight,
               flexibleSpace: flexibleSpace,
             ),
           ],
-          physics: const BouncingScrollPhysics(),
           body: body == null ? buildLoadingWidget() : Column(
             children: [
               adWidget ?? const SizedBox(),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
                   child: body,
                 ),
               ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as go;
 import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/grade.dart';
 import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
-import 'package:grader_for_mashov_new/features/utilities/shared_preferences_utilities.dart';
+import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class GradeChartScreen extends StatefulWidget {
   final List<Grade> grades;
@@ -74,13 +74,7 @@ class _GradeChartScreenState extends State<GradeChartScreen> {
         elevation: 0,
         //backgroundColor: Color(0xFF03a9f4),
         backgroundColor: SharedPreferencesUtilities.themes.colorAppBar,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-
-            Text(widget.grades.first.subject, style: const go.TextStyle(fontSize: 21)),
-          ],
-        ),
+        title: Text(widget.grades.first.subject, style: const go.TextStyle(fontSize: 21)),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(MediaQuery.of(context).size.height/8),
           child: Padding(
@@ -90,14 +84,14 @@ class _GradeChartScreenState extends State<GradeChartScreen> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(avg.toStringAsFixed(1), style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 45, fontWeight: FontWeight.w500),),
-                    Text('ממוצע', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 16, fontWeight: FontWeight.w500),),
+                    Text('${widget.grades.length}', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 45, fontWeight: FontWeight.w500)),
+                    Text('מבחנים', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 16, fontWeight: FontWeight.w500)),
                   ],
                 ),
                 Column(
                   children: <Widget>[
-                    Text('${widget.grades.length}', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 45, fontWeight: FontWeight.w500)),
-                    Text('מבחנים', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 16, fontWeight: FontWeight.w500)),
+                    Text(avg.toStringAsFixed(1), style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 45, fontWeight: FontWeight.w500),),
+                    Text('ממוצע', style: go.TextStyle(color: Colors.white.withOpacity(theme.opacityText), fontSize: 16, fontWeight: FontWeight.w500),),
                   ],
                 ),
               ],
@@ -105,38 +99,41 @@ class _GradeChartScreenState extends State<GradeChartScreen> {
           ),
         ),
       ),
-      body: InteractiveViewer(
-        maxScale: 4.0,
-        child: Container(
-          color: SharedPreferencesUtilities.themes.colorAppBar,
-          child: charts.LineChart(
-            _createSampleData(),
-            domainAxis:  charts.AxisSpec<num>(
-              renderSpec: charts.GridlineRendererSpec(
-                  labelStyle: const charts.TextStyleSpec(
-                      fontSize: 0
-                  ),
-                  lineStyle: charts.LineStyleSpec(
-                    color: charts.ColorUtil.fromDartColor(Colors.transparent),
-                  )
+      body: go.Directionality(
+        textDirection: go.TextDirection.ltr,
+        child: InteractiveViewer(
+          maxScale: 4.0,
+          child: Container(
+            color: SharedPreferencesUtilities.themes.colorAppBar,
+            child: charts.LineChart(
+              _createSampleData(),
+              domainAxis:  charts.AxisSpec<num>(
+                renderSpec: charts.GridlineRendererSpec(
+                    labelStyle: const charts.TextStyleSpec(
+                        fontSize: 0
+                    ),
+                    lineStyle: charts.LineStyleSpec(
+                      color: charts.ColorUtil.fromDartColor(Colors.transparent),
+                    )
+                ),
               ),
-            ),
 
-            primaryMeasureAxis: NumericAxisSpec(
-              renderSpec: charts.GridlineRendererSpec(
-                  labelStyle: charts.TextStyleSpec(
-                    color: charts.ColorUtil.fromDartColor(Colors.white.withOpacity(SharedPreferencesUtilities.themes.opacityText)),
-                  ),
-                  lineStyle: charts.LineStyleSpec(
-                    color: charts.ColorUtil.fromDartColor(Colors.lightBlue[200]!.withOpacity(theme.opacity)),
-                  )
+              primaryMeasureAxis: NumericAxisSpec(
+                renderSpec: charts.GridlineRendererSpec(
+                    labelStyle: charts.TextStyleSpec(
+                      color: charts.ColorUtil.fromDartColor(Colors.white.withOpacity(SharedPreferencesUtilities.themes.opacityText)),
+                    ),
+                    lineStyle: charts.LineStyleSpec(
+                      color: charts.ColorUtil.fromDartColor(Colors.lightBlue[200]!.withOpacity(theme.opacity)),
+                    )
+                ),
+                tickProviderSpec: charts.StaticNumericTickProviderSpec(
+                  gradesY,
+                ),
               ),
-              tickProviderSpec: charts.StaticNumericTickProviderSpec(
-                gradesY,
-              ),
+              animate: false,
+              defaultRenderer: charts.LineRendererConfig(includePoints: true),
             ),
-            animate: false,
-            defaultRenderer: charts.LineRendererConfig(includePoints: true),
           ),
         ),
       ),

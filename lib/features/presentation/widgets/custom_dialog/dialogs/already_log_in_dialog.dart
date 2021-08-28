@@ -7,16 +7,13 @@ class AlreadyLogInDialog extends CustomDialog<String> {
     contentPadding: EdgeInsets.zero,
     content: Padding(
       padding: const EdgeInsets.all(16),
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text('הגירסה החדשה - 3.00', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 5,),
-            Text('יש כל כך הרבה דברים חדשים! אך כדי לראות אותם, תצטרך/כי להיכנס לגריידר עוד הפעם.')
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text('הגירסה החדשה - 3.00', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5,),
+          Text('יש כל כך הרבה דברים חדשים! אך כדי לראות אותם, תצטרך/כי להיכנס לגריידר עוד הפעם.')
+        ],
       ),
     ),
     actions: [
