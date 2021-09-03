@@ -19,7 +19,7 @@ class OneLineLesson extends StatelessWidget {
     //this.font3 = ,
   }) : super(key: key);
 
-  final String free = "!שיעור חופשי";
+  final String free = "שיעור חופשי!";
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +94,6 @@ class OneLineLesson extends StatelessWidget {
   static String _timeStartAndEnd(Lesson lesson) {
     String start = lesson.startTime.substring(0, 5);
     String end = lesson.endTime.substring(0, 5);
-    return '($start - $end)';
+    return '($end - $start)';
   }
 }

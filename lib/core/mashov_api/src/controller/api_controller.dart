@@ -69,9 +69,9 @@ class ApiController {
       {String? uniqueId}) async {
     var body = {
       "semel": school.id,
+      "year": year,
       "username": id,
       "password": password,
-      "year": year,
       "appName": "info.mashov.students",
       "appVersion": _apiVersion,
       "apiVersion": _apiVersion,
@@ -223,7 +223,7 @@ class ApiController {
           }
         }
         for (int y = 0; y < jo.length; y++) {
-          okTest.insert(jo[y], Lesson(subject: "!שיעור חופשי",
+          okTest.insert(jo[y], Lesson(subject: "שיעור חופשי!",
               lesson: jo[y],
               endTime: bells[jo[y] - 1]["endTime"],
               startTime: bells[jo[y] - 1]["startTime"],
@@ -498,7 +498,7 @@ class ApiController {
     headers["accept-encoding"] = "gzip";
     headers["Host"] = "web.mashov.info";
     if (uniqueId != null) {
-      headers["Cookie"] = "uniquId=${_cookieManager.uniqueId};";
+      headers["Cookie"] = "uniquId=${uniqueId};";
     }
     return headers;
   }

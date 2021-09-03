@@ -226,7 +226,7 @@ class _HomePageState extends BaseScreen<HomePage> {
     await MashovUtilities.getHomePageData(() {
       reloadHeader();
     });
-    updateAvg();
+    if (SharedPreferencesUtilities.connectedToLeaderBoard) updateAvg();
   }
 
   Future<void> updateAvg() async {

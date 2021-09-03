@@ -31,16 +31,33 @@ class LeaderBoardSelectionState extends State<LeaderBoardSelection> {
 
   @override
   void initState() {
-    if (MashovUtilities.loginData!.students[0].classCode != null) {
-      int index = options.indexOf(
-          "'" + MashovUtilities.loginData!.students[0].classCode!);
-      options.insert(1, options[index]);
-      options.removeAt(index + 1);
-    }
+    getStartAgeGroup();
     Future.delayed(const Duration(milliseconds: 50), (){
       widget.callBack(options[1]);
     });
     super.initState();
+  }
+
+  getStartAgeGroup() {
+    if (MashovUtilities.loginData!.students[0].classCode != null) {
+      int index = options.indexOf(
+          "'" + MashovUtilities.loginData!.students[0].classCode!);
+      if (index != -1) {
+        options.insert(1, options[index]);
+        options.removeAt(index + 1);
+      } else {
+        int index = options.indexWhere((element) {
+          if (element.contains('"')) {
+            element = element.replaceRange(1, 2, '');
+          }
+          return element.contains(MashovUtilities.loginData!.students[0].classCode!);
+        });
+        if (index != -1) {
+          options.insert(1, options[index]);
+          options.removeAt(index + 1);
+        }
+      }
+    }
   }
 
   @override

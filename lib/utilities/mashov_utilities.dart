@@ -113,7 +113,8 @@ class MashovUtilities {
     var hour = await _controller.getTimeTable(_getUserId());
     if (single == null) return hour.value!;
 
-    List<Lesson> singleDay = hour.value![convertDateToDay()];
+    print(hour.value!.length);
+    List<Lesson> singleDay = hour.value![5 - convertDateToDay()];
     return [singleDay];
   }
 

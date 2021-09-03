@@ -38,6 +38,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       data: SharedPreferencesUtilities.themes.themeData,
       child: Scaffold(
         key: _scaffoldKey,
+        backgroundColor: SharedPreferencesUtilities.themes.backgroundColor,
         drawer: const GraderDrawer(3),
         body: Stack(
           children: [
