@@ -80,10 +80,12 @@ class _HomeworkBigScreenState extends State<HomeworkBigScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        widget.homework.subject,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                      Flexible(
+                        child: Text(
+                          widget.homework.subject,
+                          style: const TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Text(
                         '${widget.homework.date.day}/${widget.homework.date.month}/${widget.homework.date.year}',

@@ -17,27 +17,29 @@ class OneLineBehaviorSorted extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10, top: 7, bottom: 3),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '${behavesForShort['value']}',
-                    style:
-                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                  ),
-                  Text('$str1${behavesForShort['yesEvents']}',
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15)),
-                  Text('$str2${behavesForShort['noEvents']}',
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15)),
-                ],
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, top: 7, bottom: 3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${behavesForShort['value']}',
+                      style:
+                      const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                    ),
+                    Text('$str1${behavesForShort['yesEvents']}',
+                        style: TextStyle(
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15)),
+                    Text('$str2${behavesForShort['noEvents']}',
+                        style: TextStyle(
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15)),
+                  ],
+                ),
               ),
             ),
             Padding(

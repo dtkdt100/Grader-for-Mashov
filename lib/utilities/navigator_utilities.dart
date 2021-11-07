@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/leader_board/screens/leader_board_first_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/leader_board/screens/leader_board_screen.dart';

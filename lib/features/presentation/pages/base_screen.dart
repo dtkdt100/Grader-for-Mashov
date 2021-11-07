@@ -40,6 +40,17 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
               pinned: true,
               snap: true,
               elevation: 5.0,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    tooltip: 'פתח מגירת אפשרויות',
+                  );
+                },
+              ),
               forceElevated: true,
               bottom: bottom,
               actions: [ThreeDotsPicker(

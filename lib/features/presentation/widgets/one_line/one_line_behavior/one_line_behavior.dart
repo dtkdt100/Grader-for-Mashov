@@ -15,30 +15,32 @@ class OneLineBehavior extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 10, top: 6, bottom: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      event.text,
-                      style: TextStyle(
-                          color: Colors.grey[700],
-                          fontWeight: FontWeight.w600,
-                          decoration: event.justificationId > -1
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          decorationThickness: 2,
-                          fontSize: 15),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '${event.subject}(${event.reporter})',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10, top: 6, bottom: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        event.text,
+                        style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w600,
+                            decoration: event.justificationId > -1
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            decorationThickness: 2,
+                            fontSize: 15),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${event.subject}(${event.reporter})',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(

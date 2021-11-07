@@ -35,4 +35,9 @@ class LoginData {
     'correlationId': correlationId,
     'uniquId' : uniqueId
   };
+
+  @override
+  String toString() {
+    return 'LoginData{sessionId: $sessionId, userId: $userId, id: $id, correlationId: $correlationId, uniqueId: $uniqueId, userType: $userType, schoolUserType: $schoolUserType, schoolId: $schoolId, year: $year}';
+  }
 }

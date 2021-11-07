@@ -2,7 +2,7 @@ import 'package:grader_for_mashov_new/features/data/material_design_icons_flutte
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/grades/grade_chart_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/custom_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/calculate_avg_dialog.dart';
-import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/custom_fab_circular_menu.dart';
+import '../../../widgets/pickers/fab_circular_menu/custom_fab_circular_menu.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/body_grades_design.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/flexible_space_app_bar.dart';
 import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';

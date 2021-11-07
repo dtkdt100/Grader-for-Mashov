@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:grader_for_mashov_new/features/models/home_page_data.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/behavior/behavior_count_screen.dart';
@@ -8,6 +8,7 @@ import 'package:grader_for_mashov_new/features/presentation/pages/screens/hatamo
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/home_page.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/homework/homework_screen.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/screens/leader_board/screens/leader_board_screen.dart';
+import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/drawer_dialogs/change_year_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/drawer_dialogs/leave_app_dialog.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/drawer_dialogs/log_out_dialog.dart';
 import 'screens/leader_board/screens/leader_board_first_screen.dart';
@@ -22,6 +23,7 @@ import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dar
 
 class GraderDrawer extends StatefulWidget {
   final int from;
+
   const GraderDrawer(this.from, {Key? key}) : super(key: key);
 
   @override
@@ -29,7 +31,8 @@ class GraderDrawer extends StatefulWidget {
 }
 
 class _GraderDrawerState extends State<GraderDrawer> {
-  final ValueNotifier<String?> filePath = ValueNotifier(SharedPreferencesUtilities.filePath);
+  final ValueNotifier<String?> filePath =
+      ValueNotifier(SharedPreferencesUtilities.filePath);
 
   @override
   void initState() {
@@ -47,7 +50,9 @@ class _GraderDrawerState extends State<GraderDrawer> {
           children: [
             buildTopHeaderDesign(),
             buildPicture(),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             DrawerOptions(callBack: handleTap),
           ],
         ),
@@ -69,7 +74,9 @@ class _GraderDrawerState extends State<GraderDrawer> {
         pageRout = const TableTimeScreen(2);
         break;
       case (3):
-        pageRout = SharedPreferencesUtilities.connectedToLeaderBoard ? const LeaderBoardScreen() : const LeaderBoardFirstScreen();
+        pageRout = SharedPreferencesUtilities.connectedToLeaderBoard
+            ? const LeaderBoardScreen()
+            : const LeaderBoardFirstScreen();
         break;
       case (4):
         pageRout = const HomeworkScreen(4);
@@ -90,22 +97,18 @@ class _GraderDrawerState extends State<GraderDrawer> {
         LogOutDialog().showWithAnimation(context);
         break;
       case (10):
+        ChangeYearDialog().showWithAnimation(context);
+        break;
+      case (11):
         LeaveAppDialog().showWithAnimation(context);
         break;
     }
-    if (index == widget.from || index == 9 || index == 10) {
-    } else {
+    if (!(index == widget.from || index >= 9)) {
       if (index == 0) {
-        MashovUtilities.homePageData = HomePageData(
-            avg: '0',
-            grades: null,
-            hoursOfDay: '0',
-            msgs: '0',
-            tableTime: null,
-            homeWorks: null,
-            infoPlayer: null);
+        MashovUtilities.homePageData.clear();
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (c) => const HomePage()), (route) => false);
+            MaterialPageRoute(builder: (c) => const HomePage()),
+            (route) => false);
       } else {
         if (widget.from == 0) {
           Navigator.push(
@@ -116,31 +119,31 @@ class _GraderDrawerState extends State<GraderDrawer> {
         }
       }
     }
-
   }
 
   Widget buildTopHeaderDesign() => const TopHeader();
 
   Widget buildPicture() => Row(
-    children: <Widget>[
-      Expanded(
-        flex: 4,
-        child: MashovPicture(
-          filePath: filePath,
-        ),
-      ),
-      const Spacer(
-        flex: 1,
-      ),
-      const Expanded(
-        flex: 5,
-        child: RateOnGooglePlay()
-      ),
-    ],
-  );
+        children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: MashovPicture(
+              filePath: filePath,
+            ),
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+          Expanded(
+              flex: 5,
+              child: Platform.isAndroid
+                  ? const RateOnGooglePlay()
+                  : const SizedBox()),
+        ],
+      );
 
   Future<void> getPicture() async {
-    await SharedPreferencesUtilities.getPicture();
+    SharedPreferencesUtilities.getPicture();
     filePath.value = SharedPreferencesUtilities.filePath;
     if (SharedPreferencesUtilities.filePath == null) {
       filePath.value = (await MashovUtilities.getPicture()).path;

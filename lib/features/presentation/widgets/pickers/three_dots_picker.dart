@@ -9,6 +9,7 @@ class ThreeDotsPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      tooltip: 'פתח תפריט',
       onSelected: selected,
       itemBuilder: (context) {
         return List.generate(children.length, (index){

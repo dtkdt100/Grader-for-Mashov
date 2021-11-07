@@ -100,14 +100,7 @@ class ChangeAvgZerosDialog extends CustomDialog<String> {
                         ),
                         onPressed: () {
                           SharedPreferencesUtilities.setZero(_avg == Avg.yes);
-                          MashovUtilities.homePageData = HomePageData(
-                              avg: '0',
-                              grades: null,
-                              hoursOfDay: '0',
-                              msgs: '0',
-                              tableTime: null,
-                              homeWorks: null,
-                              infoPlayer: null);
+                          MashovUtilities.homePageData.clear();
                           Navigator.pop(context);
                         },
                       ),

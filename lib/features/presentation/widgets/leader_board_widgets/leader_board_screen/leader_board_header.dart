@@ -76,7 +76,7 @@ class LeaderBoardHeaderState extends State<LeaderBoardHeader> {
                           const Spacer(),
                           IconButton(
                               splashColor: Colors.grey,
-                              tooltip: 'Open navigation menu',
+                              tooltip: 'פתח מגירת אפשרויות',
                               onPressed: () {
                                 widget.scaffoldKey.currentState!
                                     .openDrawer();
@@ -98,13 +98,12 @@ class LeaderBoardHeaderState extends State<LeaderBoardHeader> {
                           IconButton(
                               tooltip: 'הגדרות',
                               onPressed: () async {
-                                await LeaderBoardBottomSheet(
-                                    restart: widget.restart,
-                                    callBack: widget.load)
-                                    .show(context);
-                                // await bottomSheet(context, () {
-                                //   callBack(ageGroupGlo);
-                                // }, restart);
+                                if (SharedPreferencesUtilities.connectedToLeaderBoard) {
+                                  await LeaderBoardBottomSheet(
+                                      restart: widget.restart,
+                                      callBack: widget.load)
+                                      .show(context);
+                                }
                               },
                               icon: const Icon(
                                 Icons.settings,

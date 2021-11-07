@@ -2,15 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
 import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
-import 'package:grader_for_mashov_new/features/models/home_page_data.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/home_page_dialogs/change_order_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'mashov_utilities.dart';
 
 class SharedPreferencesUtilities {
-  static Future<SharedPreferences> prefsFuture = SharedPreferences.getInstance();
-  static SharedPreferences? prefs;
+  static late SharedPreferences prefs;
 
   static const String _keyLoginData = 'loginData';
   static const String _keyPicture = 'Picture';
@@ -19,7 +16,7 @@ class SharedPreferencesUtilities {
   static const String _keyLeaderBoard = 'isLogInToLeaderBoard';
   static const String _keyHomePageCards = 'homePageCards';
 
-  static Themes themes = LightThemes();
+  static Themes themes = LightTheme();
   static String? filePath;
   static LoginDetails? loginDetails;
   static bool removeZeros = false;
@@ -39,20 +36,27 @@ class SharedPreferencesUtilities {
   }
 
   static Future<void> initSharedPrefs() async {
-    prefs = await prefsFuture;
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  static Future<void> changeYear(int year) async {
+    await prefs.remove(_keyLeaderBoard);
+    await prefs.remove(_keyPicture);
+    await prefs.remove(_keyThemeMode);
+    loginDetails!.year = year;
+    clearMostPreferences();
+    await setLoginData(loginDetails!);
   }
 
   ///Login data
   static Future<void> setLoginData(LoginDetails loginData) async {
     loginDetails = loginData;
-    await prefs!.setString(_keyLoginData, _encode(loginData.toJson()));
+    await prefs.setString(_keyLoginData, _encode(loginData.toJson()));
   }
 
   static LoginDetails? getLoginData() {
-    String? loginDataString = prefs!.getString(_keyLoginData);
-
+    String? loginDataString = prefs.getString(_keyLoginData);
     if (loginDataString == null) return null;
-
     loginDetails = LoginDetails.fromJson(_decode<dynamic>(loginDataString));
     return loginDetails;
   }
@@ -60,14 +64,12 @@ class SharedPreferencesUtilities {
   ///Picture
   static Future<void> setPicture(String path) async {
     filePath = path;
-    await prefs!.setString(_keyPicture, path);
+    await prefs.setString(_keyPicture, path);
   }
 
   static File? getPicture() {
-    String? path = prefs!.getString(_keyPicture);
-
+    String? path = prefs.getString(_keyPicture);
     if (path == null) return null;
-
     filePath = path;
     return File(path);
   }
@@ -75,11 +77,11 @@ class SharedPreferencesUtilities {
   ///Home page cards
   static Future<void> setHomePageCards(List<bool> cards) async {
     homePageCards = cards;
-    await prefs!.setString(_keyHomePageCards, _encode(cards));
+    await prefs.setString(_keyHomePageCards, _encode(cards));
   }
 
   static List<bool>? getHomePageCards() {
-    String? cards = prefs!.getString(_keyHomePageCards);
+    String? cards = prefs.getString(_keyHomePageCards);
     if (cards == null) {
       homePageCards =
           List.generate(ChangeOrderDialog.cards.length, (index) => true);
@@ -92,11 +94,11 @@ class SharedPreferencesUtilities {
   ///Zeros
   static Future<void> setZero(bool zero) async {
     removeZeros = zero;
-    await prefs!.setBool(_keyRemoveZeros, zero);
+    await prefs.setBool(_keyRemoveZeros, zero);
   }
 
   static bool? getZero() {
-    bool? zero = prefs!.getBool(_keyRemoveZeros);
+    bool? zero = prefs.getBool(_keyRemoveZeros);
     if (zero == null) return null;
     removeZeros = zero;
     return zero;
@@ -105,11 +107,11 @@ class SharedPreferencesUtilities {
   ///LeaderBoard
   static Future<void> setLeaderBoard(bool connected) async {
     connectedToLeaderBoard = connected;
-    await prefs!.setBool(_keyLeaderBoard, connected);
+    await prefs.setBool(_keyLeaderBoard, connected);
   }
 
   static bool? getLeaderBoard() {
-    bool? connected = prefs!.getBool(_keyLeaderBoard);
+    bool? connected = prefs.getBool(_keyLeaderBoard);
 
     if (connected == null) return null;
 
@@ -119,44 +121,41 @@ class SharedPreferencesUtilities {
 
   ///Themes
   static Future<void> setTheme(String mode) async {
-    themes = mode == 'dark' ? DarkThemes() : LightThemes();
-    await prefs!.setString(_keyThemeMode, mode);
+    themes = mode == 'dark' ? DarkTheme() : LightTheme();
+    await prefs.setString(_keyThemeMode, mode);
   }
 
   static Themes? getTheme() {
-    String? mode = prefs!.getString(_keyThemeMode);
+    String? mode = prefs.getString(_keyThemeMode);
 
     if (mode == null) return null;
 
-    themes = mode == 'dark' ? DarkThemes() : LightThemes();
+    themes = mode == 'dark' ? DarkTheme() : LightTheme();
     return themes;
   }
 
   ///Already login
   static bool? getAlreadyLogin() {
-    String? login = prefs!.getString('Username');
+    String? login = prefs.getString('Username');
     alreadyLogin = login != null;
     if (login == null) return false;
     return true;
   }
 
-  ///Clear all - for tests
+  ///Clear all
   static Future<void> clearAllPreferences() async {
-    themes = LightThemes();
-    filePath = null;
+    clearMostPreferences();
     loginDetails = null;
+    await prefs.clear();
+  }
+
+  static void clearMostPreferences() {
+    themes = LightTheme();
+    filePath = null;
     removeZeros = false;
     connectedToLeaderBoard = false;
     MashovUtilities.loginData = null;
-    MashovUtilities.homePageData = HomePageData(
-        avg: '0',
-        grades: null,
-        hoursOfDay: '0',
-        msgs: '0',
-        tableTime: null,
-        homeWorks: null,
-        infoPlayer: null);
-    await prefs!.clear();
+    MashovUtilities.homePageData.clear();
   }
 
   static String _encode(Object value) => json.encode(value);

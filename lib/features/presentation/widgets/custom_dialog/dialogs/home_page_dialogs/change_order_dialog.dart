@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:grader_for_mashov_new/features/data/themes/light_themes.dart';
+import 'package:grader_for_mashov_new/features/data/themes/light_theme.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/custom_dialog/dialogs/new_avg_dialog.dart';
 import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
@@ -46,7 +46,7 @@ class ChangeOrderDialog extends CustomDialog<String>{
                 highlightColor: Colors.transparent,
               ),
               child: CheckboxListTile(
-                activeColor: LightThemes().colorAppBar,
+                activeColor: LightTheme().colorAppBar,
                 controlAffinity: ListTileControlAffinity.leading,
                 title: const Text(
                   "בחר הכל",

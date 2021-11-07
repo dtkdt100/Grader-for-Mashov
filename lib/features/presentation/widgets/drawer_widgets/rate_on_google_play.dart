@@ -43,8 +43,7 @@ class RateOnGooglePlay extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Image.network(
-                  "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Play_Prism.max-500x500.png")
+              Image.asset('assets/google_play_icon.png')
             ],
           ),
         ),

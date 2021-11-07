@@ -264,14 +264,7 @@ class _HomePageState extends BaseScreen<HomePage> {
 
   @override
   void reload() {
-    MashovUtilities.homePageData = HomePageData(
-        avg: '0',
-        grades: null,
-        hoursOfDay: '0',
-        msgs: '0',
-        tableTime: null,
-        homeWorks: null,
-        infoPlayer: null);
+    MashovUtilities.homePageData.clear();
     reloadHeader();
     super.reload();
   }

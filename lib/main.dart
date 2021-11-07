@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'features/data/animation/material_ink_splash.dart';
 import 'features/presentation/pages/loading_page.dart';
 

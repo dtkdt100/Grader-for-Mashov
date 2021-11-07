@@ -14,6 +14,7 @@ class DrawerOptions extends StatelessWidget {
     'מונה אירועים': Icons.check_box_outlined,
     'התאמות': MdiIcons.glasses,
     'התנתקות': MdiIcons.logout,
+    'החלף שנה (ללא התנתקות)': MdiIcons.accountSwitch,
     'יציאה (ללא התנתקות)': MdiIcons.logout,
   };
 
@@ -21,8 +22,8 @@ class DrawerOptions extends StatelessWidget {
   DrawerOptions({Key? key, required this.callBack}) : super(key: key);
 
   final Widget divider = Divider(
-    color: const Color(0xFF03a9f4).withOpacity(SharedPreferencesUtilities.themes.opacity),
-    thickness: 0.8,
+    color: Colors.grey.withOpacity(SharedPreferencesUtilities.themes.opacity),
+    thickness: 0.1,
     height: 0,
   );
 
@@ -31,20 +32,15 @@ class DrawerOptions extends StatelessWidget {
     return Column(
       children: List.generate(drawerOptions.length + 1, (index) {
         List<String> keys = List<String>.from(drawerOptions.keys);
-
-
         if (index == drawerOptions.length) {
           return divider;
         }
-
         return Column(
           children: <Widget>[
             divider,
             InkWell(
               onTap: () {
-                if (!(index == 9 || index == 9 + 1)) {
-                  Navigator.pop(context);
-                }
+                if (index < 9) Navigator.pop(context);
                 callBack(index);
               },
               child: buildOneLineDrawer(index, keys[index]),

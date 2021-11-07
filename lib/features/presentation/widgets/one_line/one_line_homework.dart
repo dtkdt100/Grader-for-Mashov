@@ -42,11 +42,14 @@ class OneLineHomework extends StatelessWidget {
                     mainAxisAlignment:
                     MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        homework.subject,
-                        style: TextStyle(
-                            fontSize: font1,
-                            fontWeight: FontWeight.bold),
+                      Flexible(
+                        child: Text(
+                          homework.subject,
+                          style: TextStyle(
+                              fontSize: font1,
+                              fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       Text(
                         '${homework.date.day}/${homework.date.month}/${homework.date.year}',

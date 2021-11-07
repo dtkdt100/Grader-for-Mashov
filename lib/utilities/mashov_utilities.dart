@@ -5,11 +5,9 @@ import 'package:grader_for_mashov_new/core/avg_game_controller/avg_game_controll
 import 'package:grader_for_mashov_new/features/data/analyzer/analyzer.dart';
 import 'package:grader_for_mashov_new/features/models/home_page_data.dart';
 import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
-import 'package:http/http.dart' as http;
 import 'package:grader_for_mashov_new/core/mashov_api/mashov_api.dart';
 import 'package:grader_for_mashov_new/features/data/login_details/login_details.dart';
 import 'package:path_provider/path_provider.dart';
-
 export 'package:grader_for_mashov_new/core/mashov_api/mashov_api.dart';
 
 class MashovUtilities {
@@ -30,12 +28,13 @@ class MashovUtilities {
   static Future<bool> sendCode(LoginDetails loginDetails) async {
     return await _controller.sendLoginCode(
         loginDetails.school!, loginDetails.username!, loginDetails.password!);
-    //return result != null;
   }
 
   static Future<File> getPicture() async {
-    File file = await _urlToFile(
-        'https://upload.wikimedia.org/wikipedia/commons/1/17/Google-flutter-logo.png');
+    var rng = Random();
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    File file = File(tempPath + (rng.nextInt(100)).toString() + '.png');
     file = await _controller.getPicture(loginData!.students[0].id, file);
     return file;
   }
@@ -113,9 +112,15 @@ class MashovUtilities {
     var hour = await _controller.getTimeTable(_getUserId());
     if (single == null) return hour.value!;
 
-    print(hour.value!.length);
-    List<Lesson> singleDay = hour.value![5 - convertDateToDay()];
-    return [singleDay];
+    int index = 5 - convertDateToDay();
+
+    if (index == -1) {
+      return [[]];
+    } else {
+      List<Lesson> singleDay = hour.value![index];
+      return [singleDay];
+    }
+
   }
 
   static Future<Map<String, dynamic>> getBehaves() async {
@@ -163,16 +168,6 @@ class MashovUtilities {
 
   static Future<void> logOut() async => await _controller.logout();
 
-  static Future<File> _urlToFile(String imageUrl) async {
-    var rng = Random();
-    Directory tempDir = await getTemporaryDirectory();
-    String tempPath = tempDir.path;
-    File file = File(tempPath + (rng.nextInt(100)).toString() + '.png');
-    http.Response response = await http.get(Uri.parse(imageUrl));
-    await file.writeAsBytes(response.bodyBytes);
-    return file;
-  }
-
   static Future<Map<String, dynamic>> getMessages(int count) async {
     var msgs = await _controller.getMessages(count * 20);
     var msgCount = await _controller.getMessagesCount();
@@ -215,9 +210,6 @@ class MashovUtilities {
         length--;
       }
     }
-    // if ((total/length).toStringAsFixed(1) == 'NaN'){
-    //   return 'אין נתונים';
-    // }
     return (total / length).toStringAsFixed(fixed);
   }
 

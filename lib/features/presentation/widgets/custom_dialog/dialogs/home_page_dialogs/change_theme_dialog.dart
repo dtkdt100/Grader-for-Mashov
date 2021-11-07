@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grader_for_mashov_new/features/data/themes/dark_themes.dart';
-import 'package:grader_for_mashov_new/features/data/themes/light_themes.dart';
+import 'package:grader_for_mashov_new/features/data/themes/dark_theme.dart';
+import 'package:grader_for_mashov_new/features/data/themes/light_theme.dart';
 import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 import '../../custom_dialog.dart';
@@ -104,7 +104,7 @@ class ChangeThemeDialog extends CustomDialog<String> {
                               ),
                               onPressed: () {
                                 SharedPreferencesUtilities.setTheme(themeDict[_theme]!.toString());
-                                SharedPreferencesUtilities.themes = _theme == ThemeApp.light ? LightThemes() : DarkThemes();
+                                SharedPreferencesUtilities.themes = _theme == ThemeApp.light ? LightTheme() : DarkTheme();
                                 Navigator.pop(context);
                               },
                             ),

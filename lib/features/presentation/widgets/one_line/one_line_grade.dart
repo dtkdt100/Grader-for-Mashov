@@ -50,10 +50,10 @@ class OneLineGrade extends StatelessWidget {
 
   static Widget _getGradeDesign(int grade) {
     Color color = Colors.red;
-    if (grade >= 95){
+    if (grade >= 90){
       color = Colors.green;
     }
-    else if (grade >= 80){
+    else if (grade >= 70){
       color = Colors.blue;
     }
     return Container(

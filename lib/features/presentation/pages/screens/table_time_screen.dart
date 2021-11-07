@@ -4,6 +4,8 @@ import 'package:grader_for_mashov_new/features/presentation/pages/base_screen.da
 import 'package:grader_for_mashov_new/features/presentation/pages/grader_drawer.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/one_line/one_line_lesson.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/three_dots_picker.dart';
+import 'package:grader_for_mashov_new/features/presentation/widgets/pop_up_information/pop_up_information.dart';
+import 'package:grader_for_mashov_new/features/presentation/widgets/screens_widgets/card_design.dart';
 import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
 import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
@@ -29,7 +31,7 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
       data: SharedPreferencesUtilities.themes.themeData,
       child: DefaultTabController(
         length: 6,
-        initialIndex: MashovUtilities.convertDateToDay() == 6 ? 5 : MashovUtilities.convertDateToDay(),
+        initialIndex: MashovUtilities.convertDateToDay() == 6 ? 0 : MashovUtilities.convertDateToDay(),
         child: Scaffold(
           drawer: const GraderDrawer(2),
           appBar: AppBar(
@@ -59,6 +61,11 @@ class _TableTimeScreenState extends BaseScreen<TableTimeScreen> {
                 }
                 return ListView(
                   children: List.generate(lessons![5-index2].length, (index) {
+                    // OneLineLesson oneLineLesson = OneLineLesson(
+                    //   lesson: lessons![5-index2][index],
+                    //   glow: currentHour[5-index2] == null ? false : currentHour[5-index2]![index],
+                    //   showRoom: true,
+                    // );
                     return OneLineLesson(
                       lesson: lessons![5-index2][index],
                       glow: currentHour[5-index2] == null ? false : currentHour[5-index2]![index],

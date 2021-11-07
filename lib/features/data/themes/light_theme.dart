@@ -1,7 +1,7 @@
 import 'package:grader_for_mashov_new/features/data/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class LightThemes implements Themes {
+class LightTheme implements Themes {
 
   @override
   bool darkMode = false;

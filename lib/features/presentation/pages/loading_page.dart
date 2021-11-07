@@ -11,7 +11,8 @@ import 'package:grader_for_mashov_new/utilities/navigator_utilities.dart';
 import 'package:grader_for_mashov_new/utilities/shared_preferences_utilities.dart';
 
 class LoadingPage extends StatefulWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  final Future<void> Function()? doBefore;
+  const LoadingPage({Key? key, this.doBefore}) : super(key: key);
 
   static Widget backgroundDesign(){
     return Container(
@@ -79,6 +80,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> loadMemo() async {
+    if (widget.doBefore != null) await widget.doBefore!();
     await SharedPreferencesUtilities.initSharedPrefs();
     SharedPreferencesUtilities.getAll();
     await Future.delayed(const Duration(milliseconds: 500));

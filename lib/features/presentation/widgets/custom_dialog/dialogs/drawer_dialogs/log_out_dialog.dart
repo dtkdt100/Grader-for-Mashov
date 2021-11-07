@@ -31,9 +31,12 @@ class LogOutDialog extends CustomDialog<String> {
       TextButton(
         child: const Text('התנתק'),
         onPressed: () async {
-          await MashovUtilities.logOut();
-          await SharedPreferencesUtilities.clearAllPreferences();
-          NavigatorUtilities(const LoadingPage()).pushReplacementWithNoAnimation(context);
+          NavigatorUtilities(LoadingPage(
+            doBefore: () async {
+              await MashovUtilities.logOut();
+              await SharedPreferencesUtilities.clearAllPreferences();
+            },
+          )).pushReplacementWithNoAnimation(context);
         },
       ),
     ],

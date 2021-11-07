@@ -21,6 +21,16 @@ class HomePageData {
     required this.infoPlayer,
   });
 
+  void clear() {
+    avg = '0';
+    grades = null;
+    hoursOfDay = '0';
+    msgs = '0';
+    tableTime = null;
+    homeWorks = null;
+    infoPlayer = null;
+  }
+
   static HomePageData clearHomePageData = HomePageData(
       avg: '0',
       grades: null,
