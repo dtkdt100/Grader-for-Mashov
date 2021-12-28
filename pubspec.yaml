@@ -4,7 +4,7 @@ description: A new Flutter application.
 publish_to: 'none'
 
 
-version: 3.1.1+31
+version: 3.1.2+32
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -13,14 +13,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  like_button: ^2.0.3
+  like_button: ^2.0.4
   wave: ^0.2.0
   page_transition: ^2.0.4
   wakelock: ^0.5.6
-  flash: ^2.0.3
-  url_launcher: ^6.0.12
-  flutter_html: ^2.1.5 #no web
-  shared_preferences: ^2.0.8
+  flash: ^2.0.3+1
+  url_launcher: ^6.0.17
+  flutter_html: ^2.2.1 #no web
+  shared_preferences: ^2.0.11
   charts_flutter: ^0.12.0
   open_file: ^3.2.1
   image_picker: ^0.8.4+4 #no web
@@ -30,17 +30,17 @@ dependencies:
   measured_size: ^1.0.0
   flutter_staggered_animations: ^1.0.0
 
-  dio: ^4.0.1
-  flutter_local_notifications: ^9.0.2
-  permission_handler: ^8.2.5
+  dio: ^4.0.4
+  flutter_local_notifications: ^9.1.5
+  permission_handler: ^8.3.0
 
-  cupertino_icons: ^1.0.3
+  cupertino_icons: ^1.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^1.0.4
 
 
 flutter:

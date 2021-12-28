@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:grader_for_mashov_new/features/presentation/pages/loading_page.dart';
 import 'package:grader_for_mashov_new/features/presentation/widgets/pickers/radio_list_tile_picker.dart';
 import 'package:grader_for_mashov_new/utilities/mashov_utilities.dart';
@@ -49,6 +48,7 @@ class ChangeYearDialog extends CustomDialog<String> {
           TextButton(
             child: const Text('עבור'),
             onPressed: () {
+              Navigator.pop(context);
               NavigatorUtilities(LoadingPage(doBefore: () async {
                 await SharedPreferencesUtilities.changeYear(
                     int.parse(selectionKey.currentState!.currentTitle()));

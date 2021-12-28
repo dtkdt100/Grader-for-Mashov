@@ -13,7 +13,6 @@ typedef Parser<E> = E Function(Map<String, dynamic> src);
 typedef DataProcessor = void Function(dynamic data, Api api);
 typedef RawDataProcessor = void Function(String json, Api api);
 
-
 class ApiController {
   final CookieManager _cookieManager;
   final RequestController _requestController;
@@ -40,11 +39,10 @@ class ApiController {
     }
   }
 
-
-  ApiController(this._cookieManager, this._requestController) :
-        _rawDataProcessor = null, _dataProcessor = null,
+  ApiController(this._cookieManager, this._requestController)
+      : _rawDataProcessor = null,
+        _dataProcessor = null,
         jsonHeader = _setJsonHeader();
-
 
   ///returns a list of schools.
   Future<Result<List<School>>> getSchools() =>
@@ -57,10 +55,9 @@ class ApiController {
       "semel": school.id,
       "username": id,
     };
-    Map<String, String> headers = {
-      "Content-Type": "application/json"
-    };
-    var res = await _requestController.post(_cellphoneUrl, headers, json.encode(body));
+    Map<String, String> headers = {"Content-Type": "application/json"};
+    var res = await _requestController.post(
+        _cellphoneUrl, headers, json.encode(body));
     return res.statusCode == 200;
   }
 
@@ -91,8 +88,10 @@ class ApiController {
         .post(_loginUrl, headers, json.encode(body))
         .then((response) {
       if (response.statusCode == 200) {
-        String uniqueId =
-            response.headers["set-cookie"]!.split("uniquId=").last.split(";")[0];
+        String uniqueId = response.headers["set-cookie"]!
+            .split("uniquId=")
+            .last
+            .split(";")[0];
         processResponse(response);
         login = Login.fromJson(
             json.decode(utf8.decode(response.bodyBytes)), uniqueId);
@@ -111,13 +110,9 @@ class ApiController {
   }
 
   ///Returns a list of grades.
-  Future<Result<List<Grade>>> getGrades(String userId) {
-    Map<String, String> headers = _authHeader();
-
-    return _requestController.get(_gradesUrl(userId), headers).then((value) =>
-        _parseListResponse<Grade>(value, Grade.fromJson, Api.grades));
-
-  }
+  Future<Result<List<Grade>>> getGrades(String userId) => _process(
+      _authList<Grade>(_gradesUrl(userId), Grade.fromJson, Api.grades),
+      Api.grades);
 
   ///Returns a list of behave events.
   Future<Result<List<BehaveEvent>>>? getBehaveEvents(String userId) => _process(
@@ -125,7 +120,7 @@ class ApiController {
           _behaveUrl(userId), BehaveEvent.fromJson, Api.behaveEvents),
       Api.behaveEvents);
 
-  ////Returns the messages count - all, inbox, new and unread.
+  /// Returns the messages count - all, inbox, new and unread.
   Future<Result<MessagesCount>> getMessagesCount() => _process(
           _auth(_messagesCountUrl, MessagesCount.fromJson, Api.messagesCount),
           Api.messagesCount)
@@ -190,26 +185,30 @@ class ApiController {
 
     if (_dataProcessor != null) _dataProcessor!(timetable, Api.timetable);
     return Result<List<List<Lesson>>>(
-        exception: null, value: processTableTimeDate(timetable, bellsMap), statusCode: 200);
+        exception: null,
+        value: processTableTimeDate(timetable, bellsMap),
+        statusCode: 200);
   }
 
-  List<List<Lesson>> processTableTimeDate(List<Lesson> times, List<dynamic> bells){
-    List<List<Lesson>> hi2 = [];
+  List<List<Lesson>> processTableTimeDate(
+      List<Lesson> times, List<dynamic> bells) {
+    List<List<Lesson>> newTableTime = [];
 
-    for(int i = 0; i < 6; i++) {
-      List<Lesson> hi = [];
+    List<Lesson> oneDay = [];
+    for (int i = 0; i < 6; i++) {
       for (int j = 0; j < times.length; j++) {
-        if (times[j].day == i+1){
-          hi.add(times[j]);
+        if (times[j].day == i + 1) {
+          oneDay.add(times[j]);
         }
       }
-      hi.sort((a, b) => a.lesson.compareTo(b.lesson));
-      hi2.insert(0, hi);
+      oneDay.sort((a, b) => a.lesson.compareTo(b.lesson));
+      newTableTime.insert(0, oneDay);
+      oneDay = [];
     }
 
-    for (int i = 0; i < hi2.length; i++) {
-      List<Lesson> okTest = hi2[i];
-      List jo = [];
+    for (int i = 0; i < newTableTime.length; i++) {
+      List<Lesson> okTest = newTableTime[i];
+      List<int> jo = [];
       if (okTest.isNotEmpty) {
         for (int k = 1; k < (okTest.last.lesson) + 1; k++) {
           bool contains = false;
@@ -223,20 +222,23 @@ class ApiController {
           }
         }
         for (int y = 0; y < jo.length; y++) {
-          okTest.insert(jo[y], Lesson(subject: "שיעור חופשי!",
-              lesson: jo[y],
-              endTime: bells[jo[y] - 1]["endTime"],
-              startTime: bells[jo[y] - 1]["startTime"],
-              teachers: [""],
-              room: "",
-              groupId: 1,
-              day: okTest.last.day));
+          okTest.insert(
+              jo[y],
+              Lesson(
+                  subject: "שיעור חופשי!",
+                  lesson: jo[y],
+                  endTime: bells[jo[y] - 1]["endTime"],
+                  startTime: bells[jo[y] - 1]["startTime"],
+                  teachers: [""],
+                  room: "",
+                  groupId: 1,
+                  day: okTest.last.day));
         }
         okTest.sort((a, b) => a.lesson.compareTo(b.lesson));
       }
     }
-    hi2.add([]);
-    return hi2;
+    newTableTime.add([]);
+    return newTableTime;
   }
 
   ///Returns a list of the Alfon Groups.
@@ -317,14 +319,13 @@ class ApiController {
     Result<List<Group>> groups2 =
         await _authList<Group>(_groupsUrl(userId), Group.fromJson, Api.groups);
 
-
     Result<List<LessonCount>?> lessonCounts = await _authList(
         _lessonCountUrl(userId), LessonCount.fromJson, Api.lessonCount);
     List<BehaveEvent>? behaves = behaves2.value;
     List<Group>? groups = groups2.value;
     List<BehaveCounter> behaveCounter = [];
 
-    if(groups == null) return [];
+    if (groups == null) return [];
 
     for (int i = 0; i < groups.length; i++) {
       String sub = groups[i].subject;
@@ -394,18 +395,17 @@ class ApiController {
     _cookieManager.clearAll();
   }
 
-  Future<Map<String, dynamic>?> getAttachment(String messageId, String fileId, String name) async {
-
+  Future<Map<String, dynamic>?> getAttachment(
+      String messageId, String fileId, String name) async {
     Map<String, String> headers = _authHeader();
     headers.addAll(_authHeader());
 
     return await DownloadUtilities(
-      link: _attachmentUrl(messageId, fileId, name),
-      fileName: name,
-      headers: headers
-    ).startDownload();
+            link: _attachmentUrl(messageId, fileId, name),
+            fileName: name,
+            headers: headers)
+        .startDownload();
   }
-
 
   ///Returns a given maakav attachment.
   Future<File> getMaakavAttachment(
@@ -417,7 +417,6 @@ class ApiController {
         .then((response) => response.bodyBytes)
         .then((attachment) => file.writeAsBytes(attachment));
   }
-
 
   ///Returns a list of E, using an authenticated request.
   Future<Result<List<E>>> _authList<E>(
@@ -480,7 +479,7 @@ class ApiController {
   }
 
   ///The authentication header.
-  Map<String, String> _authHeader()   {
+  Map<String, String> _authHeader() {
     Map<String, String> headers = {}..addAll(jsonHeader);
 
     ///uniquId is NOT a typo!

@@ -99,7 +99,7 @@ class _LoadingPageState extends State<LoadingPage> {
       loadSchools();
     } else {
       await MashovUtilities.login(SharedPreferencesUtilities.loginDetails!);
-      NavigatorUtilities(const HomePage()).pushReplacementDefault(context);
+      NavigatorUtilities(const HomePage()).pushReplacementWithNoAnimation(context);
     }
   }
 
