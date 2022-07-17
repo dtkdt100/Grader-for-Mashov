@@ -3,17 +3,19 @@
 *.log
 *.pyc
 *.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
+Grader for Mashov/.DS_Store
+Grader for Mashov/.atom/
+Grader for Mashov/.buildlog/
+Grader for Mashov/.history
+Grader for Mashov/.svn/
 
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
 .idea/
+
+Grader for Mashov/.idea/
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -23,16 +25,16 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-/build/
+Grader for Mashov/.dart_tool/
+Grader for Mashov/.flutter-plugins
+Grader for Mashov/.flutter-plugins-dependencies
+Grader for Mashov/.packages
+Grader for Mashov/.pub-cache/
+Grader for Mashov/.pub/
+Grader for Mashov/build/
 
 # Web related
-lib/generated_plugin_registrant.dart
+Grader for Mashov/lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -41,6 +43,6 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+Grader for Mashov/android/app/debug
+Grader for Mashov/android/app/profile
+Grader for Mashov/android/app/release
