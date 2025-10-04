@@ -40,7 +40,7 @@ class _MsgScreenState extends State<MsgScreen> {
               data: """
           ${msg!.body}
         """,
-              onLinkTap: (String? url, l, k, r) async {
+              onLinkTap: (String? url, a, b) async {
                 if (url == null) return;
                 if (!await launchUrl(Uri.parse(url))) {
                   throw 'Could not launch $url';

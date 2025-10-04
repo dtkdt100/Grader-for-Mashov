@@ -104,11 +104,17 @@ class _LoginPageState extends State<LoginPage> {
                 UsernameTextField(
                   enable: enable(),
                   key: keyUsername,
+                  onChanged: () {
+                    setState(() {});
+                  },
                 ),
                 PasswordTextField(
                   enable: enable(),
                   isPassword: isPassword,
                   key: keyPassword,
+                  onChanged: () {
+                    setState(() {});
+                  },
                 ),
                 buildBottom(),
                 Row(

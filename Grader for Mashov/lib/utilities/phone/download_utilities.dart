@@ -28,16 +28,17 @@ class DownloadUtilities {
 
       flutterLocalNotificationsPlugin!
           .initialize(
-          initSettings, onSelectNotification: _onSelectNotification);
+          initSettings, onDidReceiveNotificationResponse: _onSelectNotification);
     }
   }
 
-  static Future<dynamic> _onSelectNotification(String? json) async {
-    if (true) {
-      jsonDecode(json!)['isSuccess'] = 'h';
-      final obj = jsonDecode(json);
-      if (obj['isSuccess']) {
-        OpenFile.open(obj['filePath']);
+  static Future<dynamic> _onSelectNotification(NotificationResponse notificationResponse) async {
+    final payload = notificationResponse.payload;
+    if (payload != null) {
+      final obj = jsonDecode(payload);
+
+      if (obj['isSuccess'] == true && obj['filePath'] != null) {
+        await OpenFile.open(obj['filePath']);
       }
     }
   }

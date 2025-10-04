@@ -41,14 +41,12 @@ class LeaderBoardHeaderState extends State<LeaderBoardHeader> {
                 turns: const AlwaysStoppedAnimation(180 / 360),
                 child: WaveWidget(
                   config: CustomConfig(
-                    gradients: [
-                      ThemeUtilities.themes.colorGradient
-                    ],
-                    durations: [10000000000],
-                    heightPercentages: [0],
+                    colors: ThemeUtilities.themes.colorGradient,
+                    durations: [5, 5],
+                    heightPercentages: [0, 5],
                     blur: const MaskFilter.blur(BlurStyle.solid, 10),
-                    gradientBegin: Alignment.bottomLeft,
-                    gradientEnd: Alignment.topRight,
+                    // gradientBegin: Alignment.bottomLeft,
+                    // gradientEnd: Alignment.topRight,
                   ),
                   waveAmplitude: 15,
                   size: const Size(

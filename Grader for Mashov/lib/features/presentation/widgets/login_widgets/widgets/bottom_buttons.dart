@@ -100,7 +100,7 @@ class _BottomButtonsState extends State<BottomButtons> {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF03a9f4),
+              backgroundColor: const Color(0xFF03a9f4),
             ),
             onPressed: onTap,
             child: Padding(

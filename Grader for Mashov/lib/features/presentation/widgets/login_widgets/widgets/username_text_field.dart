@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class UsernameTextField extends StatefulWidget {
   final bool enable;
+  final VoidCallback onChanged;
 
-  const UsernameTextField({Key? key, required this.enable}) : super(key: key);
+  const UsernameTextField({Key? key, required this.enable, required this.onChanged}) : super(key: key);
 
   @override
   UsernameTextFieldState createState() => UsernameTextFieldState();
@@ -33,6 +34,9 @@ class UsernameTextFieldState extends State<UsernameTextField> {
               enabled: widget.enable,
               decoration: const InputDecoration(hintText: 'שם משתמש / ת.ז'),
               controller: textControllerUsername,
+              onChanged: (s) {
+                widget.onChanged();
+              },
             ),
           ),
         ],

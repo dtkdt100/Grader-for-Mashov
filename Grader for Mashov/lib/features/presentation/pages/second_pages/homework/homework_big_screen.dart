@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grader_for_mashov_new/core/mashov_api/src/models/user_data/homework.dart';
 import '../../../../../utilities/phone/shared_preferences_utilities.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class HomeworkBigScreen extends StatefulWidget {
   final Homework homework;
@@ -31,14 +31,14 @@ class _HomeworkBigScreenState extends State<HomeworkBigScreen> {
 
   @override
   void initState() {
-    Wakelock.enable();
+    WakelockPlus.enable();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     super.initState();
   }
 
   @override
   void dispose() {
-    Wakelock.disable();
+    WakelockPlus.disable();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     super.dispose();
   }

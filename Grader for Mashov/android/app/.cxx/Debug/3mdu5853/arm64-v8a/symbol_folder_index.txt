@@ -1,0 +1,1 @@
+/home/dolev/workspace/Grader-for-Mashov/Grader for Mashov/build/app/intermediates/cxx/Debug/3mdu5853/obj/arm64-v8a

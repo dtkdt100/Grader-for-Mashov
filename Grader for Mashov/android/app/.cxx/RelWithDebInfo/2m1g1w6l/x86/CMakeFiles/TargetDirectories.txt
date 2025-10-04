@@ -1,0 +1,2 @@
+/home/dolev/workspace/Grader-for-Mashov/Grader for Mashov/android/app/.cxx/RelWithDebInfo/2m1g1w6l/x86/CMakeFiles/edit_cache.dir
+/home/dolev/workspace/Grader-for-Mashov/Grader for Mashov/android/app/.cxx/RelWithDebInfo/2m1g1w6l/x86/CMakeFiles/rebuild_cache.dir

@@ -19,8 +19,9 @@ class PasswordSetting {
 
 class PasswordTextField extends StatefulWidget {
   final bool enable, isPassword;
+  final VoidCallback onChanged;
 
-  const PasswordTextField({Key? key, required this.enable, required this.isPassword}) : super(key: key);
+  const PasswordTextField({Key? key, required this.enable, required this.isPassword, required this.onChanged}) : super(key: key);
 
   @override
   PasswordTextFieldState createState() => PasswordTextFieldState();
@@ -54,6 +55,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
                   hintText: hintPasswordNew ?? PasswordSetting(widget.isPassword).hintText,
                   errorText: errorPasswordText),
               onChanged: (value) {
+                widget.onChanged();
                 // bool hasDigits = value.contains(RegExp(r'[0-9]'));
                 // bool hasLetters = value.contains(RegExp(r'[a-z]|[A-Z]'));
                 // if (!hasLetters || !hasDigits) {

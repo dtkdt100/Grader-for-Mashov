@@ -4,7 +4,7 @@ description: A new Flutter application.
 publish_to: 'none'
 
 
-version: 3.2.4+41
+version: 3.3.0+52
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -13,37 +13,39 @@ dependencies:
   flutter:
     sdk: flutter
 
-  like_button: ^2.0.4
+  like_button: ^2.1.0
   wave: ^0.2.2
-  page_transition: ^2.0.9
-  wakelock: ^0.6.2 # No change
-  flash: ^2.0.3+2
-  url_launcher: ^6.1.5
-  flutter_html: ^2.2.1 #no web
-  shared_preferences: ^2.0.15
-  charts_flutter: ^0.12.0
-  open_file: ^3.2.1
-  image_picker: ^0.8.5+3 #no web
+  page_transition: ^2.2.1
+  wakelock_plus: ^1.4.0
+  flash: ^3.1.1
+  url_launcher: ^6.3.2
+  flutter_html: ^3.0.0 #no web
+  shared_preferences: ^2.5.3
+  charts_flutter_new: ^0.12.0
+  open_file: ^3.5.10
+  image_picker: ^1.2.0 #no web
   auto_size_text: ^3.0.0
-  path_provider: ^2.0.11
-  platform: ^3.1.0
+  path_provider: ^2.1.5
+  platform: ^3.1.6
   flutter_vibrate: ^1.3.0
   measured_size: ^1.0.0
-  flutter_staggered_animations: ^1.0.0
+  flutter_staggered_animations: ^1.1.1
 
-  dio: ^4.0.6
-  flutter_local_notifications: ^9.7.0
-  permission_handler: ^10.0.0
+  dio: ^5.9.0
+  flutter_local_notifications: ^19.4.2
+  permission_handler: ^12.0.1
 
   #google_mobile_ads: ^1.0.1
 
   cupertino_icons: ^1.0.5
+  file: ^7.0.1
+  flutter_plugin_android_lifecycle: ^2.0.30
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^6.0.0
 
 
 flutter:

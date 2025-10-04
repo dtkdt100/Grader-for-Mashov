@@ -1,0 +1,1 @@
+/home/dolev/workspace/Grader-for-Mashov/Grader for Mashov/build/app/intermediates/cxx/RelWithDebInfo/2m1g1w6l/obj/armeabi-v7a

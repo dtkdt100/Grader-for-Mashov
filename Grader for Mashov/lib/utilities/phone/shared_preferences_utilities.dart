@@ -24,7 +24,7 @@ class SharedPreferencesUtilities {
   static String themeMode = themeDict[ThemeApp.light]!.toString();
   static String? filePath;
   static LoginDetails? loginDetails;
-  static bool removeZeros = false;
+  static bool removeZeros = true;
   static bool removeInClass = false;
   static bool connectedToLeaderBoard = false;
   static bool alreadyLogin = false;
@@ -44,7 +44,7 @@ class SharedPreferencesUtilities {
     getHomePageCards();
   }
 
-  static Future<void> initSharedPrefs() async {
+  static Future<void>   initSharedPrefs() async {
     prefs = await SharedPreferences.getInstance();
   }
 

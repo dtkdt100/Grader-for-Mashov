@@ -41,6 +41,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         backgroundColor: ThemeUtilities.themes.backgroundColor,
         drawer: const GraderDrawer(3),
         body: Stack(
+          fit: StackFit.loose,
           children: [
             swipeDetector(listAll[currentAgeGroup] == null
                 ? loading()
